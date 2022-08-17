@@ -26,5 +26,21 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProducts(Map<String, String> params, int page) {
         return this.productRepository.getProducts(params, page);
     }
+
+    @Override
+    public int countProduct() {
+        return this.productRepository.countProduct();
+    }
+
+    @Override
+    public boolean deleteProduct(int id) {
+        return this.productRepository.deleteProduct(id);
+    }
+
+    @Override
+    public boolean addProduct(Product p) {
+        p.setImage("https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674849/cld-sample-4.jpg");
+        return this.productRepository.addProduct(p);
+    }
     
 }
