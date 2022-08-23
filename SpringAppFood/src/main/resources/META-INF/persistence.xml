@@ -7,6 +7,7 @@
     <class>com.appfood.pojo.SaleOrder</class>
     <class>com.appfood.pojo.User</class>
     <class>com.appfood.pojo.Category</class>
+    <class>com.appfood.pojo.Comment</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/saledb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

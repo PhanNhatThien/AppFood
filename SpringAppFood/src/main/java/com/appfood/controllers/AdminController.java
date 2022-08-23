@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -43,5 +44,13 @@ public class AdminController {
             return "redirect:/admin/products";
         
          return "products";
+    }
+    @GetMapping("/stats")
+    public String stats(Model model,
+            @RequestParam(value = "quarter", required = false, defaultValue = "1") int quarter,
+            @RequestParam(value = "year", defaultValue = "2022") int year) {
+        model.addAttribute("catStats", this.productService.countProdsByCate());
+        model.addAttribute("revenuStats", this.productService.revenueStats(quarter, year));
+        return "stats";
     }
 }

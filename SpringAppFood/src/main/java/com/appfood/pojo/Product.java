@@ -45,7 +45,6 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
     @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
-    @NamedQuery(name = "Product.findByManufacturer", query = "SELECT p FROM Product p WHERE p.manufacturer = :manufacturer"),
     @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image"),
     @NamedQuery(name = "Product.findByCreatedDate", query = "SELECT p FROM Product p WHERE p.createdDate = :createdDate"),
     @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active")})
@@ -68,9 +67,6 @@ public class Product implements Serializable {
     @Min(value = 10000, message = "{product.price.minErr}")
     @Max(value = 100000000, message = "{product.price.maxErr}")
     private Long price;
-    @Size(max = 50)
-    @Column(name = "manufacturer")
-    private String manufacturer;
     @Size(max = 100)
     @Column(name = "image")
     private String image;
@@ -134,13 +130,7 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
-    }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
 
     public String getImage() {
         return image;

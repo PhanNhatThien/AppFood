@@ -42,5 +42,15 @@ public class ProductServiceImpl implements ProductService {
         p.setImage("https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674849/cld-sample-4.jpg");
         return this.productRepository.addProduct(p);
     }
+
+    @Override
+    public List<Object[]> countProdsByCate() {
+        return this.productRepository.countProdsByCate();
+    }
+
+    @Override
+    public List<Object[]> revenueStats(int quarter, int year) {
+        return this.productRepository.revenueStats(quarter, year);
+    }
     
 }
