@@ -4,6 +4,7 @@
  */
 package com.appfood.service.impl;
 
+import com.appfood.pojo.Comment;
 import com.appfood.pojo.Product;
 import com.appfood.repository.ProductRepository;
 import com.appfood.service.ProductService;
@@ -51,6 +52,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Object[]> revenueStats(int quarter, int year) {
         return this.productRepository.revenueStats(quarter, year);
+    }
+
+
+     @Override
+    public List<Comment> getComments(int productId) {
+        return this.productRepository.getComments(productId);
+    }
+
+    @Override
+    public Product getProductById(int productId) {
+        return this.productRepository.getProductById(productId);
+    }
+
+    @Override
+    public Comment addComment(String content, int productId) {
+        return this.productRepository.addComment(content, productId);
     }
     
 }

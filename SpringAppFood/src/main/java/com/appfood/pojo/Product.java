@@ -50,6 +50,9 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active")})
 public class Product implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+    private Set<Comment> commentSet;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -209,4 +212,12 @@ public class Product implements Serializable {
         this.file = file;
     }
     
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
 }

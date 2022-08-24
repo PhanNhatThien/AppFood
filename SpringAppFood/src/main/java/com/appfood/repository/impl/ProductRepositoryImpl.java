@@ -5,9 +5,11 @@
 package com.appfood.repository.impl;
 
 import com.appfood.pojo.Category;
+import com.appfood.pojo.Comment;
 import com.appfood.pojo.OrderDetail;
 import com.appfood.pojo.Product;
 import com.appfood.pojo.SaleOrder;
+import com.appfood.pojo.User;
 import com.appfood.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,22 +53,18 @@ public class ProductRepositoryImpl implements ProductRepository {
             List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("kw");
             if (kw != null && !kw.isEmpty()) {
-                Predicate p = b.like(root.get("name").as(String.class),
-                        String.format("%%%s%%", kw));
+                Predicate p = b.like(root.get("name").as(String.class), String.format("%%%s%%", kw));
                 predicates.add(p);
             }
 
             String fp = params.get("fromPrice");
             if (fp != null) {
-                Predicate p = b.greaterThanOrEqualTo(root.get("price").as(Long.class),
-                        Long.parseLong(fp));
+                Predicate p = b.greaterThanOrEqualTo(root.get("price").as(Long.class), Long.parseLong(fp));
                 predicates.add(p);
             }
-
             String tp = params.get("toPrice");
             if (tp != null) {
-                Predicate p = b.lessThanOrEqualTo(root.get("price").as(Long.class),
-                        Long.parseLong(tp));
+                Predicate p = b.lessThanOrEqualTo(root.get("price").as(Long.class), Long.parseLong(tp));
                 predicates.add(p);
             }
 
@@ -75,24 +73,21 @@ public class ProductRepositoryImpl implements ProductRepository {
                 Predicate p = b.equal(root.get("categoryId"), Integer.parseInt(cateId));
                 predicates.add(p);
             }
-
-            q.where(predicates.toArray(new Predicate[]{}));
-
+            q.where(predicates.toArray(Predicate[]::new));
         }
 
-        q.orderBy(b.desc(root.get("id")), b.desc(root.get("name")));
-
         Query query = session.createQuery(q);
-
         if (page > 0) {
             int size = Integer.parseInt(env.getProperty("page.size").toString());
             int start = (page - 1) * size;
             query.setFirstResult(start);
             query.setMaxResults(size);
+
         }
 
         return query.getResultList();
     }
+
 
     @Override
     public int countProduct() {
@@ -149,7 +144,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<Object[]> revenueStats(int quarter, int y) {
-                Session session = this.sessionFactory.getObject().getCurrentSession();
+        Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
@@ -168,5 +163,41 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         Query query = session.createQuery(q);
         return query.getResultList(); 
+    }
+
+
+
+     @Override
+    public List<Comment> getComments(int productId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Comment> q = b.createQuery(Comment.class);
+        Root root = q.from(Comment.class);
+        q.select(root);
+
+        q.where(b.equal(root.get("productId"), productId));
+
+        Query query = session.createQuery(q);
+        return query.getResultList(); 
+       
+    }
+
+    @Override
+    public Product getProductById(int productId) {
+       Session session = this.sessionFactory.getObject().getCurrentSession();
+       return session.get(Product.class, productId);
+    }
+
+    @Override
+    public Comment addComment(String content, int productId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Comment c = new Comment();
+        c.setContent(content);
+        c.setProductId(this.getProductById(productId));
+        c.setUserId(session.get(User.class, 6));
+
+        session.save(c);
+
+        return c;
     }
 }

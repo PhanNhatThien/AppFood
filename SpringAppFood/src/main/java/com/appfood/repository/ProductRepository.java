@@ -4,6 +4,7 @@
  */
 package com.appfood.repository;
 
+import com.appfood.pojo.Comment;
 import com.appfood.pojo.Product;
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,7 @@ public interface ProductRepository {
     boolean addProduct(Product p);
     List<Object[]> countProdsByCate();
     List<Object[]> revenueStats(int quarter, int year);
+    List<Comment> getComments(int productId);
+    Product getProductById(int productId);
+    Comment addComment(String content, int productId);
 }

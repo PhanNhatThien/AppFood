@@ -4,9 +4,11 @@
  */
 package com.appfood.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +43,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole")})
 public class User implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<Comment> commentSet;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +84,7 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Column(name = "active")
     private Boolean active;
@@ -87,6 +94,7 @@ public class User implements Serializable {
     @Column(name = "user_role")
     private String userRole;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private Set<SaleOrder> saleOrderSet;
 
     public User() {
@@ -213,4 +221,12 @@ public class User implements Serializable {
         return "com.appfood.pojo.User[ id=" + id + " ]";
     }
     
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
 }

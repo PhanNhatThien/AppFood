@@ -4,6 +4,8 @@
  */
 package com.appfood.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -12,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -50,7 +54,15 @@ public class Comment implements Serializable {
     @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private Date createdDate = new Date();
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    @JsonIgnore
+    private Product productId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    @JsonProperty("user")
+    private User userId;
 
     public Comment() {
     }
@@ -89,6 +101,22 @@ public class Comment implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public Product getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Product productId) {
+        this.productId = productId;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,7 +139,7 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "com.appfood.pojo.Comment[ id=" + id + " ]";
+        return "com.dht.pojo.Comment[ id=" + id + " ]";
     }
-    
+
 }
