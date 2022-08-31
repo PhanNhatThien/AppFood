@@ -21,10 +21,12 @@ function deleteProduct(endpoint, id, btn) {
         load.style.display = "none";
     });
 }
+
 function getProducts(endpoint) {
-    fetch(endpoint).then(function(res) {
+    fetch(endpoint).then(function (res) {
         return res.json();
-    }).then(function(data) {
+    }).then(function (data) {
+        console.info(data);
         let d = document.getElementById("myProduct");
         if (d !== null) {
             let h = "";
@@ -35,17 +37,16 @@ function getProducts(endpoint) {
                     <td>${data[i].name}</td>
                     <td>${data[i].price}</td>
                     <td>
-                        <div class="spinner-border text-info" style="display:none" id="load${data[i].id}"></div>
+                        <div class="spinner-border text-success" style="display:none" id="load${data[i].id}"></div>
                         <button class="btn btn-danger" onclick="deleteProduct('${endpoint + "/" + data[i].id}', ${data[i].id}, this)">Xoa</button>
                     </td>
-                </tr>
-            `
+                </tr>`
             d.innerHTML = h;
         }
-        
+
         let d2 = document.getElementById("mySpinner");
         d2.style.display = "none";
-    }).catch(function(err) {
+    }).catch(function (err) {
         console.error(err);
     });
 }
@@ -85,4 +86,73 @@ function addComment(endpoint, proId) {
             `;
         d.insertAdjacentHTML("beforebegin", h);
     });
+}
+
+function addToCart(id, name, price) {
+
+    event.preventDefault()
+
+    fetch("/SpringAppFood-1.0-SNAPSHOT/api/cart", {
+        method: 'post',
+        body: JSON.stringify({
+            "productId": id,
+            "productName": name,
+            "price": price,
+            "quantity": 1
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        return res.json()
+    }).then(function (data) {
+        let counter = document.getElementById("cartCounter")
+        counter.innerText = data
+    })
+
+
+}
+
+
+function updateCart(obj, productId) {
+    fetch("/SpringAppFood-1.0-SNAPSHOT/api/cart", {
+        method: 'put',
+        body: JSON.stringify({
+            "productId": productId,
+            "productName": "",
+            "price": 0,
+            "quantity": obj.value
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        return res.json()
+    }).then(function (data) {
+        let counter = document.getElementById("cartCounter")
+        counter.innerText = data.counter
+
+        let amount = document.getElementById("amountCart")
+        amount.innerText = data.amount
+    })
+}
+
+function deleteCart(productId) {
+    if (confirm("Ban co chac chan xoa khong?") == true) {
+        fetch(`/SpringAppFood-1.0-SNAPSHOT/api/cart/${productId}`, {
+            method: 'delete'
+        }).then(function (res) {
+            return res.json()
+        }).then(function (data) {
+            let counter = document.getElementById("cartCounter")
+            counter.innerText = data.counter
+
+            let amount = document.getElementById("amountCart")
+            amount.innerText = data.amount
+//            location.reload()
+            let row = document.getElementById(`product${productId}`)
+            row.style.display = "none"
+        })
+    }
+
 }

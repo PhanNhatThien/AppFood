@@ -10,6 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
+
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 <div>
     <a href="<c:url value="/admin/products" />" class="btn btn-danger">Quan Ly San Pham</a>
@@ -39,8 +40,10 @@
                         <fmt:formatNumber value="${p.price}" maxFractionDigits="3" type = "number" /> VND
                     </p>
                      <a href="<c:url value="/products/${p.id}" />" class="btn btn-primary">Xem chi tiet</a>
+                     <a href="#" class="btn btn-primary" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Dat hang</a>
                 </div>
             </div>
         </div>
     </c:forEach>
 </div>
+<script src="<c:url value="/js/product.js" />"></script>

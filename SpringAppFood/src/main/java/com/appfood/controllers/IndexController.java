@@ -4,12 +4,15 @@
  */
 package com.appfood.controllers;
 
+import com.appfood.pojo.Cart;
 import com.appfood.service.CategoryService;
 import com.appfood.service.ProductService;
+import com.appfood.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -38,8 +41,9 @@ public class IndexController {
     private Environment env;
     
     @ModelAttribute
-    public void commonAttr(Model model) {
+    public void commonAttr(Model model, HttpSession session) {
         model.addAttribute("categories", this.categoryService.getCategories());
+        model.addAttribute("cartCounter", Utils.countCart((Map<Integer, Cart>) session.getAttribute("cart")));
     }
     
     @RequestMapping("/")

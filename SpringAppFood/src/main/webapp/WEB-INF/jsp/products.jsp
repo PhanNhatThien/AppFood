@@ -52,10 +52,10 @@
 </table>
 
 <script src="<c:url value="/js/product.js" />"></script>
+<script src="<c:url value="/js/product.js" />"></script>
 <script>
     <c:url value="/api/products" var="u" />
     window.onload = function () {
         getProducts('${u}');
-    };
-    
+    }
 </script>

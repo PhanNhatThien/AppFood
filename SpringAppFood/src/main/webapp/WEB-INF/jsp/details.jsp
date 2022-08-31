@@ -34,9 +34,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
-<script src="<c:url value="/js/product.js" />"></script>
+
 <script>
         window.onload = function () {
             loadComments('${endpoint}');
         }
 </script> 
+<script src="<c:url value="/js/product.js" />"></script>
