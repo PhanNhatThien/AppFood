@@ -16,9 +16,7 @@
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/" />">&#127968; Trang chu</a>
-                </li>
+
                 <c:forEach items="${categories}" var="c">
                     <c:url value="/" var="cUrl">
                         <c:param name="cateId" value="${c.id}" />
@@ -27,12 +25,28 @@
                         <a class="nav-link" href="${cUrl}">${c.name}</a>
                     </li>
                 </c:forEach>
+                <li class="nav-item text-success" >
+                    <a class="nav-link" href="#" >
+                        &#128722;
+                    </a>
+                    <span class="badge badge-danger nav-link">0</span>
+                </li>    
                 <sec:authorize access="!isAuthenticated()">
+                    <!--                    <li class="nav-item">
+                                            <a class="nav-link text-info" href="<c:url value="/login" />">Dang nhap</a>
+                                        </li>-->
+                    <c:if test="${pageContext.request.userPrincipal.name == null}">
+                        <li class="nav-item active">
+                            <a class="nav-link text-danger" href="<c:url value="/login" />">&#128119; Đăng Nhập</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${pageContext.request.userPrincipal.name != null}">
+                        <li class="nav-item active">
+                            <a class="nav-link text-danger" href="<c:url value="/" />">${pageContext.request.userPrincipal.name}</a>
+                        </li>
+                    </c:if>
                     <li class="nav-item">
-                        <a class="nav-link text-info" href="<c:url value="/login" />">Dang nhap</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-info" href="<c:url value="/" />">Dang ky</a>
+                        <a class="nav-link text-info" href="<c:url value="/register" />">Dang ky</a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
@@ -52,7 +66,7 @@
                         <a class="nav-link text-secondary" href="<c:url value="/admin/products" />">Quan ly san pham</a>
                     </li>
                 </sec:authorize>
-                
+
             </ul>
             <c:url value="/" var="action" />
             <form method="get" action="${action}" class="d-flex">

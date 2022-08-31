@@ -56,5 +56,6 @@
     <c:url value="/api/products" var="u" />
     window.onload = function () {
         getProducts('${u}');
-    }
+    };
+    
 </script>

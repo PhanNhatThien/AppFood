@@ -6,11 +6,15 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-
-
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+<div>
+    <a href="<c:url value="/admin/products" />" class="btn btn-danger">Quan Ly San Pham</a>
+</div>
+</sec:authorize>
 <c:if test="${products.size() == 0}">
     <p>
         <strong>Không có sản phẩm nào!!!</strong>

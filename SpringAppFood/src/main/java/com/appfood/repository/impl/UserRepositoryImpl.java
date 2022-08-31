@@ -9,6 +9,7 @@ import com.appfood.repository.UserRepository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,19 @@ public class UserRepositoryImpl implements UserRepository {
 
         Query query = session.createQuery(q);
         return (User) query.getSingleResult();
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try{
+            session.save(user);
+            
+            return true;
+        } catch(HibernateException ex){
+            System.err.println(ex.getMessage());
+        }
+        return false;
     }
     
 }
