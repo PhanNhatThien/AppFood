@@ -71,5 +71,10 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Xac nhan don hang" />
         <put-attribute name="content" value="/WEB-INF/jsp/restaurant-confirm-order.jsp" />
     </definition>
+    <definition name="userStats" extends="baseLayout">
+        <put-attribute name="title" value="Thong ke bao cao" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/userStats.jsp" />
+    </definition>
 </tiles-definitions>
  

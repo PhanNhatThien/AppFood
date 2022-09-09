@@ -6,8 +6,10 @@ package com.appfood.controllers;
 
 import com.appfood.pojo.Category;
 import com.appfood.pojo.Product;
+import com.appfood.pojo.SaleOrder;
 import com.appfood.pojo.User;
 import com.appfood.service.CategoryService;
+import com.appfood.service.OrderService;
 import com.appfood.service.ProductService;
 import com.appfood.service.UserService;
 import java.text.ParseException;
@@ -42,7 +44,8 @@ public class RestaurantController {
     private UserService userService;
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private CategoryService categoryService;
 
@@ -50,7 +53,7 @@ public class RestaurantController {
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
     }
-    
+
     private void loadAllService(Model model) {
         model.addAttribute("categoryService", categoryService);
 //        model.addAttribute("employerService", employerService);
@@ -67,7 +70,6 @@ public class RestaurantController {
             Authentication authentication,
             @RequestParam(required = false) Map<String, String> params) {
 
-       
         if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
             return "access-denied";
         }
@@ -116,8 +118,7 @@ public class RestaurantController {
         model.addAttribute("currentPage", page);
         model.addAttribute("counter", productsSize.size());
         model.addAttribute("productService", productService);
-       
-        
+
         loadAllService(model);
         model.addAttribute("products", products);
 //        model.addAttribute("errMsg", model.asMap().get("errMsg"));
@@ -126,8 +127,6 @@ public class RestaurantController {
         return "restaurant-management";
     }
 
-    
-    
     @GetMapping("/restaurant/post/add-or-update")
     public String addOrUpdateRestaurant(Model model,
             Authentication authentication,
@@ -169,7 +168,7 @@ public class RestaurantController {
             final RedirectAttributes redirectAttrs) throws ParseException {
 
         if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
-            return "restaurant";
+            return "access-denied";
         }
 
         String errMsg = null;
@@ -202,34 +201,68 @@ public class RestaurantController {
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "restaurant-add-post";
     }
+
     @GetMapping("/restaurant/stats")
-    public String stats(Model model,
+    public String stats(Model model,Authentication authentication,
             @RequestParam(value = "quarter", required = false, defaultValue = "1") int quarter,
             @RequestParam(value = "month", required = false, defaultValue = "1") int month,
             @RequestParam(value = "year", defaultValue = "2022") int year) {
+        
+        if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
+            return "access-denied";
+        }
         model.addAttribute("catStats", this.productService.countProdsByCate());
-        model.addAttribute("userStats", this.productService.countProdsByUser());
         model.addAttribute("revenuStats", this.productService.revenueStats(quarter, year, month));
         return "stats";
     }
+
     @RequestMapping("/restaurant/confirm-order")
-    public String confirmOrder(Model model,
-                        @RequestParam(required = false) Map<String, String> params) {
+    public String confirmOrder(Model model,Authentication authentication,
+            @RequestParam(required = false) Map<String, String> params) {
 //        int page = Integer.parseInt(params.getOrDefault("page", "1"));
-//
-       
-        List<User> users = userService.getByRole(User.NHAHANG, 0);
-        List<User> usersSize = userService.getByRole(User.NHAHANG, 0);
-        model.addAttribute("users", users);
+        if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
+            return "access-denied";
+        }
+
+        List<SaleOrder> orders = orderService.getByActive(0);
+        List<SaleOrder> ordersSize = orderService.getByActive(0);
+        model.addAttribute("orders", orders);
 //
 //        model.addAttribute("currentPage", page);
 
-        model.addAttribute("counter", usersSize.size());
-        model.addAttribute("userService", userService);
+        model.addAttribute("counter", ordersSize.size());
+        model.addAttribute("orderService", orderService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
-       
 
         return "restaurant-confirm-order";
+    }
+
+    @RequestMapping(path = "/restaurant/confirm-order/accept")
+    public String acceptOrder(Model model,Authentication authentication,
+            @RequestParam(name = "id", defaultValue = "0") int id,
+            final RedirectAttributes redirectAttrs) {
+        
+        if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
+            return "access-denied";
+        }
+        
+        String errMsg = null;
+        String sucMsg = null;
+
+        SaleOrder order = new SaleOrder();
+        if (id != 0) {
+            order = this.orderService.getOrderById(id);
+            order.setActive(1);
+        }
+
+        if (order.getActive() == 1) {
+            sucMsg = String.format("Xác nhận đơn hàng '%s' thành công", order.getUserId());
+        } else {
+            errMsg = String.format("Xác nhận đơn hàng '%s' không thành công", order.getUserId());
+        }
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/restaurant/confirm-order";
     }
 }

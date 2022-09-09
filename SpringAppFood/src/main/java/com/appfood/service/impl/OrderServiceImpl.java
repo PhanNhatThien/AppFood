@@ -5,8 +5,10 @@
 package com.appfood.service.impl;
 
 import com.appfood.pojo.Cart;
+import com.appfood.pojo.SaleOrder;
 import com.appfood.repository.OrderRepository;
 import com.appfood.service.OrderService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,15 @@ public class OrderServiceImpl implements OrderService{
             return this.orderRepository.addReceipt(cart);
         
         return false;
+    }
+
+    @Override
+    public List<SaleOrder> getByActive(int active) {
+        return this.orderRepository.getByActive(active);
+    }
+
+    @Override
+    public SaleOrder getOrderById(int orderId) {
+        return this.orderRepository.getOrderById(orderId);
     }
 }

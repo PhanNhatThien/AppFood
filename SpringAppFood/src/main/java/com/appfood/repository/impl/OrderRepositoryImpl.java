@@ -7,12 +7,18 @@ package com.appfood.repository.impl;
 import com.appfood.pojo.Cart;
 import com.appfood.pojo.OrderDetail;
 import com.appfood.pojo.SaleOrder;
+import com.appfood.pojo.User;
 import com.appfood.repository.OrderRepository;
 import com.appfood.repository.ProductRepository;
 import com.appfood.repository.UserRepository;
 import com.appfood.utils.Utils;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +77,34 @@ public class OrderRepositoryImpl implements OrderRepository {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<SaleOrder> getByActive(int active) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<SaleOrder> query = builder.createQuery(SaleOrder.class);
+        Root root = query.from(SaleOrder.class);
+        query = query.select(root);
+
+//        Predicate p1 = builder.equal(root.get("userRole").as(String.class), role.trim());
+        Predicate p1 = builder.equal(root.get("active").as(Integer.class), active);
+
+        query = query.where(p1);
+
+        query = query.orderBy(builder.desc(root.get("id")));
+
+        javax.persistence.Query q = session.createQuery(query);
+
+
+        return q.getResultList();
+    }
+
+    @Override
+    public SaleOrder getOrderById(int orderId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        
+        return session.get(SaleOrder.class, orderId);
     }
 }
 

@@ -18,21 +18,51 @@
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
 
-                <c:forEach items="${categories}" var="c">
-                    <c:url value="/" var="cUrl">
-                        <c:param name="cateId" value="${c.id}" />
-                    </c:url>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${cUrl}">${c.name}</a>
-                    </li>
-                </c:forEach>
-                <li class="nav-item text-success" >
-                    <a class="nav-link" href="<c:url value="/cart" />" >
-                        <i>&#128722;</i>
-                        <div class="badge badge-danger" id="cartCounter">${cartCounter}</div>
-                    </a>
+                <sec:authorize access="hasRole('ROLE_KH')">
+                    <c:forEach items="${categories}" var="c">
+                        <c:url value="/" var="cUrl">
+                            <c:param name="cateId" value="${c.id}" />
+                        </c:url>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${cUrl}">${c.name}</a>
+                        </li>
+                    </c:forEach>
+                    <li class="nav-item text-success" >
+                        <a class="nav-link" href="<c:url value="/cart" />" >
+                            <i>&#128722;</i>
+                            <div class="badge badge-danger" id="cartCounter">${cartCounter}</div>
+                        </a>
 
-                </li>    
+                    </li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/products" />">Quan ly san pham</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/account-permission" />">Duyet TK Nha Hang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/stats" />">Thong ke</a>
+                    </li>
+
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_NH')">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/post/add-or-update" />">Dang tin </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/confirm-order" />">Xac nhan don hang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/management" />">Quan ly bai viet </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/stats" />">Thong ke </a>
+                    </li>
+                    
+                </sec:authorize>
                 <sec:authorize access="!isAuthenticated()">
                     <!--                    <li class="nav-item">
                                             <a class="nav-link text-info" href="<c:url value="/login" />">Dang nhap</a>
@@ -71,27 +101,6 @@
                         <a class="nav-link text-danger" href="<c:url value="/logout" />">Dang xuat</a>
                     </li>
                 </sec:authorize>
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/admin/products" />">Quan ly san pham</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/admin/stats" />">Thong ke</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/admin/account-permission" />">Duyet TK Nha Hang</a>
-                    </li>
-
-                </sec:authorize>
-                <sec:authorize access="hasRole('ROLE_NH')">
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/post/add-or-update" />">Dang tin </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/management" />">Quan ly bai viet </a>
-                    </li>
-                </sec:authorize>
-
             </ul>
             <c:url value="/" var="action" />
             <form method="get" action="${action}" class="d-flex">

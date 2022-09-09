@@ -5,6 +5,8 @@
 package com.appfood.service;
 
 import com.appfood.pojo.Cart;
+import com.appfood.pojo.SaleOrder;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,4 +15,6 @@ import java.util.Map;
  */
 public interface OrderService {
     boolean addReceipt(Map<Integer, Cart> cart);
+    SaleOrder getOrderById(int orderId);
+    List<SaleOrder> getByActive( int active);
 }

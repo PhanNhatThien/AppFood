@@ -46,14 +46,11 @@ public class AdminController {
         
          return "products";
     }
-//    @GetMapping("/stats")
-//    public String stats(Model model,
-//            @RequestParam(value = "quarter", required = false, defaultValue = "1") int quarter,
-//            @RequestParam(value = "year", defaultValue = "2022") int year) {
-//        model.addAttribute("catStats", this.productService.countProdsByCate());
-//        model.addAttribute("revenuStats", this.productService.revenueStats(quarter, year));
-//        return "stats";
-//    }
+    @GetMapping("/userStats")
+    public String userstats(Model model){
+        model.addAttribute("userStats", this.productService.countProdsByUser());
+        return "userStats";
+    }
     
 //    @GetMapping("/products/{productId}")
 //    public String productDetails( @PathVariable(value = "productId") int id) {
