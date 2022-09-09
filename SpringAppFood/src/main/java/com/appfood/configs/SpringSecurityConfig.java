@@ -6,6 +6,8 @@ package com.appfood.configs;
 
 import com.appfood.handlers.LoginHandler;
 import com.appfood.handlers.LogoutHandler;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,6 +45,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dtswvj7fd",
+                        "api_key", "148311446715574",
+                        "api_secret", "ngjSn89cTeyTHmqN6ZLi397AybQ",
+                        "secure", true));
+        return cloudinary;
+    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -67,8 +79,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         
         http.authorizeRequests().antMatchers("/").permitAll()
                 .antMatchers("/**/comments").authenticated()
-                .antMatchers("/admin/**")
-                .access("hasRole('ROLE_ADMIN')");
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/restaurant/**").access("hasRole('ROLE_NH')");
+        
 
         http.csrf().disable();
     }

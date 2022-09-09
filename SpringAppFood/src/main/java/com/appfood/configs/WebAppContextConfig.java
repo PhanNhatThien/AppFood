@@ -5,6 +5,9 @@
 package com.appfood.configs;
 
 import com.appfood.formatters.CategoryFormatter;
+import com.appfood.formatters.UserFormatter;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +17,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -74,6 +78,24 @@ public class WebAppContextConfig implements WebMvcConfigurer{
     @Override
     public void addFormatters(FormatterRegistry r) {
         r.addFormatter(new CategoryFormatter());
+        r.addFormatter(new UserFormatter());
     }
     
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+
+        return resolver;
+    }
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dtswvj7fd",
+                        "api_key", "148311446715574",
+                        "api_secret", "ngjSn89cTeyTHmqN6ZLi397AybQ",
+                        "secure", true));
+        return cloudinary;
+    }
 }

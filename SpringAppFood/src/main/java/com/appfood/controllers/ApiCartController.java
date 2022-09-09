@@ -5,10 +5,12 @@
 package com.appfood.controllers;
 
 import com.appfood.pojo.Cart;
+import com.appfood.service.OrderService;
 import com.appfood.utils.Utils;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ApiCartController {
+    @Autowired
+    private OrderService orderService;
+    
     @PostMapping("/api/cart")
     public int addToCart(@RequestBody Cart params, HttpSession session){
         
@@ -76,5 +81,15 @@ public class ApiCartController {
     
         }
         return new ResponseEntity<>(Utils.cartStats(cart), HttpStatus.OK);
+    }
+    
+    @PostMapping("/api/pay")
+    public HttpStatus pay(HttpSession session){
+        if(this.orderService.addReceipt((Map<Integer, Cart>) session.getAttribute("cart")) == true)
+        {  
+            session.removeAttribute("cart");
+            return HttpStatus.OK;
+        }
+        return HttpStatus.BAD_REQUEST;
     }
 }

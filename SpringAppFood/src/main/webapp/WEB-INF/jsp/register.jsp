@@ -21,7 +21,8 @@
 </c:if>
 <c:url value="/register" var="action"/>
 
-<form:form style="margin-top:50px" method="post" action="${action}" modelAttribute="user">
+<form:form style="margin-top:50px" method="post" action="${action}" 
+           enctype="multipart/form-data" modelAttribute="user">
     <div style="margin-top:20px" class="form-group">
         <label for="firstname">First Name</label>    
         <form:input type="text" id="firstname" path="firstName" class="form-control"  />
@@ -45,6 +46,19 @@
     <div style="margin-top:20px" class="form-group">
         <label for="confirm-password">Confirm Password</label>
          <form:input type="password" id="confirm-password" path="confirmPassword" class="form-control"  />
+    </div>
+    <div style="margin-top:20px" class="form-group">
+        <label for="avatar">Avatar</label>
+         <form:input type="file" id="avatar" path="file" class="form-control"  />
+    </div>
+    <div class="form-group">
+        <label>Loại tài khoản <span style="color: red">*</span></label>
+        <form:select path="userRole" class="custom-select">
+            <form:option value="ROLE_KH" label="Khách hàng"
+                         selected="${user.userRole.equals('ROLE_KH') ? true : ''}"/>
+            <form:option value="ROLE_NH" label="Nhà hàng"
+                         selected="${user.userRole.equals('ROLE_NH') ? true : ''}"/>
+        </form:select>
     </div>
     <div style="margin-top:20px" class="form-group">
         <input type="submit" value="DANG KY" class="btn btn-primary" />

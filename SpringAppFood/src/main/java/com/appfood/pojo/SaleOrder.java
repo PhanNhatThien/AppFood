@@ -56,6 +56,8 @@ public class SaleOrder implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
+    @Column(name = "active")
+    private int active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId")
     private Set<OrderDetail> orderDetailSet;
 
@@ -135,6 +137,20 @@ public class SaleOrder implements Serializable {
     @Override
     public String toString() {
         return "com.appfood.pojo.SaleOrder[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the active
+     */
+    public int getActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(int active) {
+        this.active = active;
     }
     
 }

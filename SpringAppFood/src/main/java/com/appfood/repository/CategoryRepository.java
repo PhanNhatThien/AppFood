@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface CategoryRepository {
     List<Category> getCategories();
+    Category getById(int id);
 }

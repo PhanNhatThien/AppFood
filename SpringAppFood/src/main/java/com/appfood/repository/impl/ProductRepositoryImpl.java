@@ -8,6 +8,7 @@ import com.appfood.pojo.Category;
 import com.appfood.pojo.Comment;
 import com.appfood.pojo.OrderDetail;
 import com.appfood.pojo.Product;
+import com.appfood.pojo.Restaurant;
 import com.appfood.pojo.SaleOrder;
 import com.appfood.pojo.User;
 import com.appfood.repository.ProductRepository;
@@ -43,7 +44,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     private LocalSessionFactoryBean sessionFactory;
     @Autowired
     private Environment env;
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -94,7 +95,6 @@ public class ProductRepositoryImpl implements ProductRepository {
         return query.getResultList();
     }
 
-
     @Override
     public int countProduct() {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -106,11 +106,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public boolean deleteProduct(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        
+
         try {
             Product p = session.get(Product.class, id);
             session.delete(p);
-            
+
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -126,9 +126,8 @@ public class ProductRepositoryImpl implements ProductRepository {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false;
         }
-      
+        return false;
     }
 
     @Override
@@ -145,11 +144,48 @@ public class ProductRepositoryImpl implements ProductRepository {
         q.groupBy(rC.get("id"));
 
         Query query = session.createQuery(q);
-        return query.getResultList(); 
+        return query.getResultList();
     }
 
     @Override
-    public List<Object[]> revenueStats(int quarter, int y) {
+    public List<Object[]> countProdsByUser() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        Root rP = q.from(Product.class);
+        Root rU = q.from(User.class);
+        Root rR = q.from(Restaurant.class);
+
+        q.where(b.equal(rP.get("postedByUser"), rU.get("id")),
+                b.equal(rR.get("user"), rU.get("id")));
+        q.multiselect(rU.get("id"), rR.get("name"), b.count(rP.get("id")));
+        q.groupBy(rU.get("id"));
+
+        Query query = session.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> frequencyStats() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+
+        
+        Root rU = q.from(User.class);
+        Root rO = q.from(SaleOrder.class);
+
+        q.where(b.equal(rO.get("userId"), rU.get("id")));
+        q.multiselect(b.prod(b.count(rO.get("id")), b.count(rU.get("id"))));
+        q.groupBy(rU.get("id"));
+
+        Query query = session.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> revenueStats(int quarter, int y, int m) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
@@ -158,22 +194,20 @@ public class ProductRepositoryImpl implements ProductRepository {
         Root rD = q.from(OrderDetail.class);
         Root rO = q.from(SaleOrder.class);
 
-        q.where(b.equal(rD.get("productId"), rP.get("id")), 
+        q.where(b.equal(rD.get("productId"), rP.get("id")),
                 b.equal(rD.get("orderId"), rO.get("id")),
                 b.equal(b.function("QUARTER", Integer.class, rO.get("createdDate")), quarter),
-                b.equal(b.function("YEAR", Integer.class, rO.get("createdDate")), y));
-
+                b.equal(b.function("YEAR", Integer.class, rO.get("createdDate")), y),
+                b.equal(b.function("MONTH", Integer.class, rO.get("createdDate")), m));
 
         q.multiselect(rP.get("id"), rP.get("name"), b.sum(b.prod(rD.get("num"), rD.get("unitPrice"))));
         q.groupBy(rP.get("id"));
 
         Query query = session.createQuery(q);
-        return query.getResultList(); 
+        return query.getResultList();
     }
 
-
-
-     @Override
+    @Override
     public List<Comment> getComments(int productId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
@@ -184,14 +218,14 @@ public class ProductRepositoryImpl implements ProductRepository {
         q.where(b.equal(root.get("productId"), productId));
 
         Query query = session.createQuery(q);
-        return query.getResultList(); 
-       
+        return query.getResultList();
+
     }
 
     @Override
     public Product getProductById(int productId) {
-       Session session = this.sessionFactory.getObject().getCurrentSession();
-       return session.get(Product.class, productId);
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        return session.get(Product.class, productId);
     }
 
     @Override
@@ -202,7 +236,6 @@ public class ProductRepositoryImpl implements ProductRepository {
         c.setProductId(this.getProductById(productId));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         c.setUserId(this.userRepository.getUserByUsername(authentication.getName()));
-
 
         session.save(c);
 

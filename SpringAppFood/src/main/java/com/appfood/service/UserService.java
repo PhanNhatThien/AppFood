@@ -5,6 +5,7 @@
 package com.appfood.service;
 
 import com.appfood.pojo.User;
+import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -14,4 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService{
     boolean addUser(User user);
     User getUserByUsername(String username);
+    User getUserById(int userId);
+    List<User> getByRole(String role, int active);
 }

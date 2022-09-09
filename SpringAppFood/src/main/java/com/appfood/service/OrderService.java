@@ -4,14 +4,13 @@
  */
 package com.appfood.service;
 
-import com.appfood.pojo.Category;
-import java.util.List;
+import com.appfood.pojo.Cart;
+import java.util.Map;
 
 /**
  *
  * @author thien thien
  */
-public interface CategoryService {
-    List<Category> getCategories();
-    Category getById(int id);
+public interface OrderService {
+    boolean addReceipt(Map<Integer, Cart> cart);
 }

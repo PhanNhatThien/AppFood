@@ -47,6 +47,6 @@
     <div>
         <h4 class="text-info">Tong tien:    <span id="amountCart">${cartStats.amount}</span> VND</h4>
     </div>
-    <input type="button" value="THANH TOAN" class="btn btn-danger"/>
+        <input type="button" onclick="pay()" value="THANH TOAN" class="btn btn-danger"/>
 </c:if>
 

@@ -5,6 +5,7 @@
 package com.appfood.repository;
 
 import com.appfood.pojo.User;
+import java.util.List;
 
 /**
  *
@@ -12,5 +13,8 @@ import com.appfood.pojo.User;
  */
 public interface UserRepository {
     boolean addUser(User user);
+    User getUserById(int userId);
     User getUserByUsername(String username);
+    List<User> getByRole(String role, int active);
+    
 }

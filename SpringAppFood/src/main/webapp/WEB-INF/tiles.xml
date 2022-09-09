@@ -47,5 +47,29 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Gio hang" />
         <put-attribute name="content" value="/WEB-INF/jsp/cart.jsp" />
     </definition>
+    <definition name="account-permission" extends="baseLayout">
+        <put-attribute name="title" value="Duyệt Nhà hàng" />
+        <put-attribute name="content" value="/WEB-INF/jsp/account-permission.jsp" />
+    </definition>
+    <definition name="restaurant" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ nhà hàng" />
+        <put-attribute name="content" value="/WEB-INF/jsp/restaurant.jsp" />
+    </definition>
+    <definition name="restaurant-add-post" extends="baseLayout">  
+        <put-attribute name="title" value="Đăng bài" />
+        <put-attribute name="content" value="/WEB-INF/jsp/restaurant-add-post.jsp" />
+    </definition>
+    <definition name="access-denied" extends="baseLayout">
+        <put-attribute name="title" value="Tài khoản chưa kích hoạt" />
+        <put-attribute name="content" value="/WEB-INF/jsp/access-denied.jsp" />
+    </definition>
+    <definition name="restaurant-management" extends="baseLayout">
+        <put-attribute name="title" value="Trang quản lý bài viết" />
+        <put-attribute name="content" value="/WEB-INF/jsp/restaurant-management.jsp" />
+    </definition>
+    <definition name="restaurant-confirm-order" extends="baseLayout">
+        <put-attribute name="title" value="Xac nhan don hang" />
+        <put-attribute name="content" value="/WEB-INF/jsp/restaurant-confirm-order.jsp" />
+    </definition>
 </tiles-definitions>
  

@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Product implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private Set<Comment> commentSet;
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,17 +79,31 @@ public class Product implements Serializable {
     private Date createdDate;
     @Column(name = "active")
     private Boolean active;
+
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @JsonIgnore
     private Category categoryId;
+
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private User postedByUser;
+    
+    @Transient
+    private int postedByUserId;
+    @Transient
+    private int categoryById;
+        
+//    @Transient
+//    private String createdDateStr;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     @JsonIgnore
     private Set<OrderDetail> orderDetailSet;
 
     @Transient
     private MultipartFile file;
-    
+
     public Product() {
     }
 
@@ -132,8 +147,6 @@ public class Product implements Serializable {
     public void setPrice(Long price) {
         this.price = price;
     }
-
-
 
     public String getImage() {
         return image;
@@ -200,7 +213,7 @@ public class Product implements Serializable {
     public String toString() {
         return "com.appfood.pojo.Product[ id=" + id + " ]";
     }
-    
+
     public MultipartFile getFile() {
         return file;
     }
@@ -211,7 +224,7 @@ public class Product implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
     @XmlTransient
     public Set<Comment> getCommentSet() {
         return commentSet;
@@ -219,5 +232,47 @@ public class Product implements Serializable {
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
+    }
+
+    /**
+     * @return the postedByUser
+     */
+    public User getPostedByUser() {
+        return postedByUser;
+    }
+
+    /**
+     * @param postedByUser the postedByUser to set
+     */
+    public void setPostedByUser(User postedByUser) {
+        this.postedByUser = postedByUser;
+    }
+
+    /**
+     * @return the postedByUserId
+     */
+    public int getPostedByUserId() {
+        return postedByUserId;
+    }
+
+    /**
+     * @param postedByUserId the postedByUserId to set
+     */
+    public void setPostedByUserId(int postedByUserId) {
+        this.postedByUserId = postedByUserId;
+    }
+
+    /**
+     * @return the categoryById
+     */
+    public int getCategoryById() {
+        return categoryById;
+    }
+
+    /**
+     * @param categoryById the categoryById to set
+     */
+    public void setCategoryById(int categoryById) {
+        this.categoryById = categoryById;
     }
 }

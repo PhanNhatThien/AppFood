@@ -32,6 +32,7 @@
         </form:select>
         <label for="cate" class="form-label">Danh muc san pham</label>
     </div>
+        
     <div>
         <br>
         <input type="submit" value="Them san pham" class="btn btn-danger" />

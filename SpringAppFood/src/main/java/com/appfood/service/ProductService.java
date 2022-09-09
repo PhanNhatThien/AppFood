@@ -19,7 +19,9 @@ public interface ProductService {
     boolean deleteProduct(int id);
     boolean addProduct(Product p);
     List<Object[]> countProdsByCate();
-    List<Object[]> revenueStats(int quarter, int year);
+    List<Object[]> countProdsByUser();
+    List<Object[]> revenueStats(int quarter, int year, int month);
+    List<Object[]> frequencyStats();
     List<Comment> getComments(int productId);
     Product getProductById(int productId);
     Comment addComment(String content, int productId);

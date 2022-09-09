@@ -31,7 +31,7 @@
                         <i>&#128722;</i>
                         <div class="badge badge-danger" id="cartCounter">${cartCounter}</div>
                     </a>
-                    
+
                 </li>    
                 <sec:authorize access="!isAuthenticated()">
                     <!--                    <li class="nav-item">
@@ -47,6 +47,7 @@
                             <a class="nav-link text-danger" href="<c:url value="/" />">${pageContext.request.userPrincipal.name}</a>
                         </li>
                     </c:if>
+
                     <li class="nav-item">
                         <a class="nav-link text-info" href="<c:url value="/register" />">Dang ky</a>
                     </li>
@@ -56,9 +57,16 @@
                         <a class="nav-link text-danger" href="<c:url value="/login" />">
                             ${pageContext.session.getAttribute("currentUser").firstName}
                             ${pageContext.session.getAttribute("currentUser").lastName}
+                            <c:if test="${currentUser.avatar != null}">
+                                <img style="width: 30px;" src="${currentUser.avatar}" class="rounded-circle" />
+                            </c:if>
+                            <c:if test="${currentUser.avatar == null}">
+                                &#128119;
+                            </c:if>
                             (<sec:authentication property="principal.username" />)
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="<c:url value="/logout" />">Dang xuat</a>
                     </li>
@@ -66,6 +74,21 @@
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="<c:url value="/admin/products" />">Quan ly san pham</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/stats" />">Thong ke</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/account-permission" />">Duyet TK Nha Hang</a>
+                    </li>
+
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_NH')">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/post/add-or-update" />">Dang tin </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/management" />">Quan ly bai viet </a>
                     </li>
                 </sec:authorize>
 

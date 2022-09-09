@@ -156,3 +156,19 @@ function deleteCart(productId) {
     }
 
 }
+
+
+function pay(){
+    if(confirm("Ban chac chan thanh toan?")== true){
+        fetch("/SpringAppFood-1.0-SNAPSHOT/api/pay", {
+            method: 'post'
+        }).then(function(res){
+            return res.json();
+        }).then(function(code){
+            console.info(code);
+            location.reload();
+        })
+        
+        
+    }
+}

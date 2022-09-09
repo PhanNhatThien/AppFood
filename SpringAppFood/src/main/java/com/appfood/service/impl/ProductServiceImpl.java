@@ -7,10 +7,14 @@ package com.appfood.service.impl;
 import com.appfood.pojo.Comment;
 import com.appfood.pojo.Product;
 import com.appfood.repository.ProductRepository;
+import com.appfood.repository.UserRepository;
 import com.appfood.service.ProductService;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +26,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
     
     @Override
     public List<Product> getProducts(Map<String, String> params, int page) {
@@ -41,6 +48,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean addProduct(Product p) {
         p.setImage("https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674849/cld-sample-4.jpg");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        p.setPostedByUser(this.userRepository.getUserByUsername(authentication.getName()));
+        p.setCreatedDate(new Date());
         return this.productRepository.addProduct(p);
     }
 
@@ -48,10 +58,20 @@ public class ProductServiceImpl implements ProductService {
     public List<Object[]> countProdsByCate() {
         return this.productRepository.countProdsByCate();
     }
+    
+    @Override
+    public List<Object[]> countProdsByUser() {
+        return this.productRepository.countProdsByUser();
+    }
+    
+    @Override
+    public List<Object[]> frequencyStats() {
+        return this.productRepository.frequencyStats();
+    }
 
     @Override
-    public List<Object[]> revenueStats(int quarter, int year) {
-        return this.productRepository.revenueStats(quarter, year);
+    public List<Object[]> revenueStats(int quarter, int year, int month) {
+        return this.productRepository.revenueStats(quarter, year, month);
     }
 
 

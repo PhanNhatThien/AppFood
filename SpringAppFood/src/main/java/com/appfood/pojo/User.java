@@ -6,6 +6,7 @@ package com.appfood.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -23,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -44,12 +46,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole")})
 public class User implements Serializable {
 
-    public static final String USER = "ROLE_USER";
-    
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String NHAHANG = "ROLE_NH";
+    public static final String USER = "ROLE_KH";
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
     private Set<Comment> commentSet;
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,7 +78,7 @@ public class User implements Serializable {
     private String email;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
-  
+
     @Size(min = 1, max = 45)
     @Column(name = "phone")
     private String phone;
@@ -90,17 +94,34 @@ public class User implements Serializable {
     @JsonIgnore
     private String password;
     @Column(name = "active")
-    private Boolean active;
+    private int active;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "user_role")
     private String userRole;
+
     @OneToMany(mappedBy = "userId")
     @JsonIgnore
     private Set<SaleOrder> saleOrderSet;
+
+    @OneToMany(mappedBy = "postedByUser")
+    @JsonIgnore
+    private Set<Product> products ;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Restaurant> restaurants ;
+
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private Set<Comment> comments;
+    
     @Transient
     private String confirmPassword;
+    private String avatar;
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
@@ -109,7 +130,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String firstName, String lastName, String email, String phone, String username, String password, String userRole) {
+    public User(Integer id, String firstName, String lastName, String email, String phone, String username, String password, int active, String userRole, String avatar) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -117,7 +138,10 @@ public class User implements Serializable {
         this.phone = phone;
         this.username = username;
         this.password = password;
+        this.active = active;
         this.userRole = userRole;
+        this.avatar = avatar;
+
     }
 
     public Integer getId() {
@@ -176,11 +200,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Boolean getActive() {
+    public int getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(int active) {
         this.active = active;
     }
 
@@ -225,7 +249,7 @@ public class User implements Serializable {
     public String toString() {
         return "com.appfood.pojo.User[ id=" + id + " ]";
     }
-    
+
     @XmlTransient
     public Set<Comment> getCommentSet() {
         return commentSet;
@@ -248,4 +272,74 @@ public class User implements Serializable {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+    /**
+     * @return the avatar
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * @param avatar the avatar to set
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the products
+     */
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    /**
+     * @param products the products to set
+     */
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    /**
+     * @return the restaurants
+     */
+    public Set<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    /**
+     * @param restaurants the restaurants to set
+     */
+    public void setRestaurants(Set<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
+
+//    /**
+//     * @return the comments
+//     */
+//    public Set<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    /**
+//     * @param comments the comments to set
+//     */
+//    public void setComments(Set<Comment> comments) {
+//        this.comments = comments;
+//    }
 }

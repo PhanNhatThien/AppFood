@@ -7,6 +7,7 @@ package com.appfood.controllers;
 import com.appfood.pojo.Cart;
 import com.appfood.service.CategoryService;
 import com.appfood.service.ProductService;
+import com.appfood.service.UserService;
 import com.appfood.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,12 +40,17 @@ public class IndexController {
     @Autowired
     private ProductService productService;
     @Autowired
+    private UserService userService;
+    
+    @Autowired
     private Environment env;
     
     @ModelAttribute
-    public void commonAttr(Model model, HttpSession session) {
+    public void commonAttr(Model model, HttpSession session, Authentication authentication) {
         model.addAttribute("categories", this.categoryService.getCategories());
         model.addAttribute("cartCounter", Utils.countCart((Map<Integer, Cart>) session.getAttribute("cart")));
+        if (authentication != null)
+            model.addAttribute("currentUser", this.userService.getUserByUsername(authentication.getName()));
     }
     
     @RequestMapping("/")

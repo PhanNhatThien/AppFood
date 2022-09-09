@@ -8,6 +8,7 @@
     <class>com.appfood.pojo.User</class>
     <class>com.appfood.pojo.Category</class>
     <class>com.appfood.pojo.Comment</class>
+    <class>com.appfood.pojo.Restaurant</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/appfooddb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
