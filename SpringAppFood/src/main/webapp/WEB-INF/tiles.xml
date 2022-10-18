@@ -23,11 +23,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/jsp/products.jsp" />
     </definition>
-    <definition name="stats" extends="baseLayout">
-        <put-attribute name="title" value="Thong ke bao cao" />
-        <put-attribute name="content"
-                       value="/WEB-INF/jsp/stats.jsp" />
-    </definition>
+
     <definition name="details" extends="baseLayout">
         <put-attribute name="title" value="Chi tiet san pham" />
         <put-attribute name="content"
@@ -75,6 +71,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Thong ke bao cao" />
         <put-attribute name="content"
                        value="/WEB-INF/jsp/userStats.jsp" />
+    </definition>
+    <definition name="stats-revenue" extends="baseLayout">
+        <put-attribute name="title" value="Thong ke bao cao" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/stats-revenue.jsp" />
+    </definition>
+    <definition name="stats-cate" extends="baseLayout">
+        <put-attribute name="title" value="Thong ke bao cao" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/stats-cate.jsp" />
+    </definition>
+    <definition name="admin-account" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/jsp/admin-account.jsp" />
+    </definition>
+    <definition name="view-account" extends="baseLayout">
+        <put-attribute name="title" value="Xem thông tin tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/jsp/view-account.jsp" />
+    </definition>
+    <definition name="add-account" extends="baseLayout">
+        <put-attribute name="title" value="Thêm tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/jsp/add-account.jsp" />
     </definition>
 </tiles-definitions>
  

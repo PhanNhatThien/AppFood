@@ -202,24 +202,29 @@ public class RestaurantController {
         return "restaurant-add-post";
     }
 
-    @GetMapping("/restaurant/stats")
-    public String stats(Model model,Authentication authentication,
-            @RequestParam(value = "quarter", required = false, defaultValue = "1") int quarter,
-            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
-            @RequestParam(value = "year", defaultValue = "2022") int year) {
-        
-        if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
-            return "access-denied";
-        }
-        model.addAttribute("catStats", this.productService.countProdsByCate());
-        model.addAttribute("revenuStats", this.productService.revenueStats(quarter, year, month));
-        return "stats";
+    @GetMapping("/restaurant/stats-cate")
+    public String statsCategory(Model model) {
+        model.addAttribute("catStat", this.productService.countProdsByCate());
+        return "stats-cate";
+    }
+
+
+    @GetMapping("/restaurant/stats-revenue")
+    public String statsRevenue(Model model,
+                        @RequestParam(value = "quarter", required = false, defaultValue = "1") int quarter,
+
+                        @RequestParam(value = "year", defaultValue = "2022") int year) {
+
+
+
+        model.addAttribute("revenuStats", this.productService.revenueStats(quarter, year));
+        return "stats-revenue";
     }
 
     @RequestMapping("/restaurant/confirm-order")
     public String confirmOrder(Model model,Authentication authentication,
             @RequestParam(required = false) Map<String, String> params) {
-//        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
         if (this.userService.getUserByUsername(authentication.getName()).getActive() == 0) {
             return "access-denied";
         }

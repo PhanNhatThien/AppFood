@@ -70,8 +70,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Object[]> revenueStats(int quarter, int year, int month) {
-        return this.productRepository.revenueStats(quarter, year, month);
+    public List<Object[]> revenueStats(int quarter, int year) {
+        return this.productRepository.revenueStats(quarter, year);
     }
 
 

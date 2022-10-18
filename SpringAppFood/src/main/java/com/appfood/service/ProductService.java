@@ -20,7 +20,7 @@ public interface ProductService {
     boolean addProduct(Product p);
     List<Object[]> countProdsByCate();
     List<Object[]> countProdsByUser();
-    List<Object[]> revenueStats(int quarter, int year, int month);
+    List<Object[]> revenueStats(int quarter, int year);
     List<Object[]> frequencyStats();
     List<Comment> getComments(int productId);
     Product getProductById(int productId);

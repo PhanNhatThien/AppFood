@@ -4,7 +4,7 @@
  */
 
 
-function usersStats(labels, data) {
+function uStats(labels, data) {
     const ctx = document.getElementById('myChart3').getContext('2d');
     const myChart3 = new Chart(ctx, {
         type: 'pie',

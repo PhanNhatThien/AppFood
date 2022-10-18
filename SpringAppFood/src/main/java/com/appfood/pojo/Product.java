@@ -31,6 +31,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -51,8 +53,8 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active")})
 public class Product implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
-    private Set<Comment> commentSet;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+//    private Set<Comment> commentSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,10 +87,14 @@ public class Product implements Serializable {
     @JsonIgnore
     private Category categoryId;
 
-    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonProperty("user")
     private User postedByUser;
-    
+
+
+
     @Transient
     private int postedByUserId;
     @Transient
@@ -225,14 +231,14 @@ public class Product implements Serializable {
         this.file = file;
     }
 
-    @XmlTransient
-    public Set<Comment> getCommentSet() {
-        return commentSet;
-    }
-
-    public void setCommentSet(Set<Comment> commentSet) {
-        this.commentSet = commentSet;
-    }
+//    @XmlTransient
+//    public Set<Comment> getCommentSet() {
+//        return commentSet;
+//    }
+//
+//    public void setCommentSet(Set<Comment> commentSet) {
+//        this.commentSet = commentSet;
+//    }
 
     /**
      * @return the postedByUser

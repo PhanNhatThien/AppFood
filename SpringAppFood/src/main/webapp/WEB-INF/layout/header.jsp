@@ -39,13 +39,17 @@
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="<c:url value="/admin/products" />">Quan ly san pham</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/account" />">Quan ly tai khoan</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="<c:url value="/admin/account-permission" />">Duyet TK Nha Hang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/admin/stats" />">Thong ke</a>
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/userStats" />">Thong ke</a>
                     </li>
+
 
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_NH')">
@@ -58,10 +62,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="<c:url value="/restaurant/management" />">Quan ly bai viet </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/restaurant/stats" />">Thong ke </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Thong ke</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<c:url value="/restaurant/stats-cate" />">Thong ke theo</a></li>
+                            <li><a class="dropdown-item" href="<c:url value="/restaurant/stats-revenue" />">Thong ke theo</a></li>
+                            <li><a class="dropdown-item" href="#">A third link</a></li>
+                        </ul>
                     </li>
-                    
+
                 </sec:authorize>
                 <sec:authorize access="!isAuthenticated()">
                     <!--                    <li class="nav-item">

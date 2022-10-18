@@ -1,37 +1,8 @@
-<%-- 
-    Document   : stats
-    Created on : 20 Aug 2022, 01:32:11
-    Author     : thien thien
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <h1 class="text-center text-info">THONG KE BAO CAO</h1>
-
-<div class="row">
-    <div class="col-md-6 col-xs-12">
-        <table class="table">
-            <tr>
-                <th>Id</th>
-                <th>Ten danh muc</th>
-                <th>So san pham</th>
-            </tr>
-            <c:forEach items="${catStats}" var="c">
-                <tr>
-                    <td>${c[0]}</td>
-                    <td>${c[1]}</td>
-                    <td>${c[2]}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <canvas id="myChart"></canvas>
-    </div>
-</div>
-
 
 <div class="row">
     <div class="col-md-6 col-xs-12">
@@ -53,7 +24,7 @@
         </table>
     </div>
     <div class="col-md-6 col-xs-12">
-        <c:url value="/restaurant/stats" var="action" />
+        <c:url value="/restaurant/stats-revenue" var="action" />
         <form action="${action}">
             <div class="mb-3 mt-3">
                 <select class="form-control" name="quarter">
@@ -76,21 +47,14 @@
 <script src="<c:url value="/js/stats.js" />"></script>
 <script>
     window.onload = function () {
-        let data = [];
-        let labels = [];
         let data2 = [];
         let labels2 = [];
-        
-    <c:forEach items="${catStats}" var="c">
-        data.push(${c[2]});
-        labels.push('$${c[1]}');
-    </c:forEach>
+
 
     <c:forEach items="${revenuStats}" var="c">
         data2.push(${c[2]});
         labels2.push('$${c[1]}');
     </c:forEach>
-        cateStats(labels, data);
         revenueStats(labels2, data2);
     }
-</script>  
+</script>

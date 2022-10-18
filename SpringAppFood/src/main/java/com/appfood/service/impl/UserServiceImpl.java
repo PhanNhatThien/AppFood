@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import com.appfood.utils.Utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -77,16 +79,59 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
+    public boolean addOrUpdate(User user) {
+        String pass = user.getPassword();
+        user.setPassword(this.passwordEncoder.encode(pass));
+
+        String firstName = user.getFirstName();
+        user.setFirstName(Utils.stringNormalization(firstName));
+
+        String avatar = user.getAvatar();
+
+        if (!user.getFile().isEmpty()) {
+            Map r = null;
+            try {
+                r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (r != null)
+                user.setAvatar((String) r.get("secure_url"));
+            else
+                user.setAvatar(avatar);
+        }
+
+        return this.userRepository.addOrUpdate(user);
+    }
+
+
+    @Override
     public User getUserById(int userId) {
         return this.userRepository.getUserById(userId);
     }
 
     @Override
-    public List<User> getByRole(String role, int active) {
-        return this.userRepository.getByRole(role, active);
+    public List<User> getByRole(String role, int page, int active) {
+        return this.userRepository.getByRole(role, page, active);
     }
-    
+    @Override
+    public int getMaxItemsInPage() {
+        return this.userRepository.getMaxItemsInPage();
+    }
+    @Override
+    public List<User> getUsersMultiCondition(Map<String, String> params, int page) {
+        return this.userRepository.getUsersMultiCondition(params, page);
+    }
+    @Override
+    public boolean delete(User user) {
+        return this.userRepository.delete(user);
+    }
 
-    
-      
+
+
+
+
 }

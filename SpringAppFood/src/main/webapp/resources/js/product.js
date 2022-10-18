@@ -3,25 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-function deleteProduct(endpoint, id, btn) {
-    let r = document.getElementById(`row${id}`);
-    let load = document.getElementById(`load${id}`);
-    load.style.display = "block";
-    btn.style.display = "none";
-    fetch(endpoint, {
-        method: 'delete'
-    }).then(function(res) {
-        if (res.status !== 204)
-            alert("Something wrong!!!");
-        load.style.display = "none";
-        r.style.display = "none";
-    }).catch(function(err) {
-        console.error(err);
-        btn.style.display = "block";
-        load.style.display = "none";
-    });
-}
-
 function getProducts(endpoint) {
     fetch(endpoint).then(function (res) {
         return res.json();
@@ -46,10 +27,31 @@ function getProducts(endpoint) {
 
         let d2 = document.getElementById("mySpinner");
         d2.style.display = "none";
-    }).catch(function (err) {
-        console.error(err);
+//    }).catch(function (err) {
+//        console.error(err);
     });
 }
+
+function deleteProduct(endpoint, id, btn) {
+    let r = document.getElementById(`row${id}`);
+    let load = document.getElementById(`load${id}`);
+    load.style.display = "block";
+    btn.style.display = "none";
+    fetch(endpoint, {
+        method: 'delete'
+    }).then(function(res) {
+        if (res.status !== 204)
+            alert("Something wrong!!!");
+        load.style.display = "none";
+        r.style.display = "none";
+    }).catch(function(err) {
+        console.error(err);
+        btn.style.display = "block";
+        load.style.display = "none";
+    });
+}
+
+
 
 
 
@@ -92,7 +94,7 @@ function addToCart(id, name, price) {
 
     event.preventDefault()
 
-    fetch("/SpringAppFood-1.0-SNAPSHOT/api/cart", {
+    fetch("/SpringAppFood/api/cart", {
         method: 'post',
         body: JSON.stringify({
             "productId": id,
@@ -115,7 +117,7 @@ function addToCart(id, name, price) {
 
 
 function updateCart(obj, productId) {
-    fetch("/SpringAppFood-1.0-SNAPSHOT/api/cart", {
+    fetch("/SpringAppFood/api/cart", {
         method: 'put',
         body: JSON.stringify({
             "productId": productId,
@@ -139,7 +141,7 @@ function updateCart(obj, productId) {
 
 function deleteCart(productId) {
     if (confirm("Ban co chac chan xoa khong?") == true) {
-        fetch(`/SpringAppFood-1.0-SNAPSHOT/api/cart/${productId}`, {
+        fetch(`/SpringAppFood/api/cart/${productId}`, {
             method: 'delete'
         }).then(function (res) {
             return res.json()
@@ -160,7 +162,7 @@ function deleteCart(productId) {
 
 function pay(){
     if(confirm("Ban chac chan thanh toan?")== true){
-        fetch("/SpringAppFood-1.0-SNAPSHOT/api/pay", {
+        fetch("/SpringAppFood/api/pay", {
             method: 'post'
         }).then(function(res){
             return res.json();

@@ -17,6 +17,7 @@ public class CategoryFormatter implements Formatter<Category> {
 
     @Override
     public String print(Category t, Locale locale) {
+
         return String.valueOf(t.getId());
     }
 

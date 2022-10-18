@@ -35,15 +35,20 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {
     "com.appfood.controllers",
     "com.appfood.repository",
-    "com.appfood.service"
+    "com.appfood.service",
+    "com.appfood.handlers",
+    "com.appfood.validator"
 })
 public class WebAppContextConfig implements WebMvcConfigurer{
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer conf){
+
         conf.enable();
     }
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
+        registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/");
     }
     
 //    @Bean
@@ -65,6 +70,7 @@ public class WebAppContextConfig implements WebMvcConfigurer{
 
     @Override
     public Validator getValidator() {
+
         return validator();
     }
     

@@ -29,15 +29,14 @@ public class AccountPermissionController {
 
     @RequestMapping("/admin/account-permission")
     public String index(Model model,
-            @RequestParam(required = false) Map<String, String> params) {
-//        int page = Integer.parseInt(params.getOrDefault("page", "1"));
-//
-       
-        List<User> users = userService.getByRole(User.NHAHANG, 0);
-        List<User> usersSize = userService.getByRole(User.NHAHANG, 0);
+        @RequestParam(required = false) Map<String, String> params) {
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+
+        List<User> users = userService.getByRole(User.NHAHANG, page, 0);
+        List<User> usersSize = userService.getByRole(User.NHAHANG,0,0);
         model.addAttribute("users", users);
 //
-//        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", page);
 
         model.addAttribute("counter", usersSize.size());
         model.addAttribute("userService", userService);
@@ -77,10 +76,10 @@ public class AccountPermissionController {
         String errMsg = null;
         String sucMsg = null;
 
-        List<User> users = userService.getByRole(User.NHAHANG, 0);
+        List<User> users = userService.getByRole(User.NHAHANG,0, 0);
         users.forEach(user -> user.setActive(1));
 
-        int numberCheck = userService.getByRole(User.NHAHANG, 0).size();
+        int numberCheck = userService.getByRole(User.NHAHANG,0, 0).size();
         if (numberCheck == 0) {
             sucMsg = "Đã xác nhận tất cả nhà hàng thành công";
         } else {

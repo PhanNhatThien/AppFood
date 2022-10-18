@@ -109,6 +109,8 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Product> products ;
 
+
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<Restaurant> restaurants ;

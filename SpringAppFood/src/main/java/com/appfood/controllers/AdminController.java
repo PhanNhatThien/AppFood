@@ -48,7 +48,7 @@ public class AdminController {
     }
     @GetMapping("/userStats")
     public String userstats(Model model){
-        model.addAttribute("userStats", this.productService.countProdsByUser());
+        model.addAttribute("usersStats", this.productService.countProdsByUser());
         return "userStats";
     }
     

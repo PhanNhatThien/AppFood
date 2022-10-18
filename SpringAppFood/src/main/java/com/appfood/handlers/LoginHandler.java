@@ -30,7 +30,7 @@ public class LoginHandler implements AuthenticationSuccessHandler {
         User u = this.userService.getUserByUsername(a.getName());
         request.getSession().setAttribute("currentUser", u);
 
-        response.sendRedirect("/SpringAppFood-1.0-SNAPSHOT/");
+        response.sendRedirect("/SpringAppFood/");
     }
     
 }

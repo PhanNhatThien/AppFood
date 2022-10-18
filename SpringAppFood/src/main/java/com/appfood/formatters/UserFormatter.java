@@ -17,6 +17,7 @@ public class UserFormatter implements Formatter<User> {
 
     @Override
     public String print(User user, Locale locale) {
+
         return String.valueOf(user.getId());
     }
 

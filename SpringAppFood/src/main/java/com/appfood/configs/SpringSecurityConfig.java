@@ -31,7 +31,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     "com.appfood.controllers",
     "com.appfood.repository",
     "com.appfood.service",
-    "com.appfood.handlers",})
+    "com.appfood.handlers",
+    "com.appfood.validator"})
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private LoginHandler loginHandler;
@@ -63,9 +64,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
 //        http.formLogin().usernameParameter("username").passwordParameter("password");
         http.formLogin().successHandler(loginHandler);
-
-        
-
 
         http.formLogin().loginPage("/login")
                 .usernameParameter("username")

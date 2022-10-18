@@ -6,10 +6,13 @@ package com.appfood.controllers;
 
 import com.appfood.pojo.User;
 import com.appfood.service.UserService;
+import com.appfood.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -21,7 +24,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     @Autowired
     private UserService userDetailsService;
-    
+    @Autowired
+    private UserValidator userValidator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(userValidator);
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";

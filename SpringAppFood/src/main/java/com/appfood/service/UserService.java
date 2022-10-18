@@ -6,6 +6,8 @@ package com.appfood.service;
 
 import com.appfood.pojo.User;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -14,7 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService{
     boolean addUser(User user);
+    boolean addOrUpdate(User user);
     User getUserByUsername(String username);
     User getUserById(int userId);
-    List<User> getByRole(String role, int active);
+    List<User> getByRole(String role,int page, int active);
+    int getMaxItemsInPage();
+    List<User> getUsersMultiCondition(Map<String, String> params, int page);
+    boolean delete(User user);
 }

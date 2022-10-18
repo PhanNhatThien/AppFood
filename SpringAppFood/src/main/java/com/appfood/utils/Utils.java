@@ -42,4 +42,25 @@ public class Utils {
         
         return kq;
     }
+
+    public static String capitalizeWord(String str) {
+        String words[] = str.split(" ");
+        String capitalizeWord = "";
+        for (String w : words) {
+            String first = w.substring(0, 1);
+            String afterfirst = w.substring(1);
+            capitalizeWord += first.toUpperCase() + afterfirst + " ";
+        }
+        return capitalizeWord.trim();
+    }
+
+    public static final String stringNormalization(String str) {
+        String result = str;
+
+        result = result.trim();
+        result = result.replaceAll("\\s+", " ");
+        result = capitalizeWord(result);
+
+        return result;
+    }
 }

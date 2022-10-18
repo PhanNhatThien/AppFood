@@ -81,6 +81,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                 predicates.add(p);
             }
             q.where(predicates.toArray(Predicate[]::new));
+
+
         }
 
         Query query = session.createQuery(q);
@@ -185,7 +187,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Object[]> revenueStats(int quarter, int y, int m) {
+    public List<Object[]> revenueStats(int quarter, int y) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
@@ -197,8 +199,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         q.where(b.equal(rD.get("productId"), rP.get("id")),
                 b.equal(rD.get("orderId"), rO.get("id")),
                 b.equal(b.function("QUARTER", Integer.class, rO.get("createdDate")), quarter),
-                b.equal(b.function("YEAR", Integer.class, rO.get("createdDate")), y),
-                b.equal(b.function("MONTH", Integer.class, rO.get("createdDate")), m));
+                b.equal(b.function("YEAR", Integer.class, rO.get("createdDate")), y));
 
         q.multiselect(rP.get("id"), rP.get("name"), b.sum(b.prod(rD.get("num"), rD.get("unitPrice"))));
         q.groupBy(rP.get("id"));
@@ -206,7 +207,6 @@ public class ProductRepositoryImpl implements ProductRepository {
         Query query = session.createQuery(q);
         return query.getResultList();
     }
-
     @Override
     public List<Comment> getComments(int productId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();

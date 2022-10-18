@@ -6,6 +6,7 @@ package com.appfood.repository;
 
 import com.appfood.pojo.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,8 +14,13 @@ import java.util.List;
  */
 public interface UserRepository {
     boolean addUser(User user);
+    boolean addOrUpdate(User user);
     User getUserById(int userId);
     User getUserByUsername(String username);
-    List<User> getByRole(String role, int active);
-    
+    List<User> getByRole(String role,int page, int active);
+    int getMaxItemsInPage();
+    List<User> getUsersMultiCondition(Map<String, String> params, int page);
+    boolean delete(User user);
+
+
 }
