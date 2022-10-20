@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,6 +38,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css">
+        <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>
+
     </head>
     <body>
         <tiles:insertAttribute name="header" />
@@ -44,6 +47,7 @@
         <div class="container">
             <tiles:insertAttribute name="content" />
         </div><!-- comment -->
+
         <tiles:insertAttribute name="footer" />
     </body>
 </html>

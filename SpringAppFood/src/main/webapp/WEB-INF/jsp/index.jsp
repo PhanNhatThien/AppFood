@@ -19,22 +19,7 @@
     </div>
 </sec:authorize>
 
-<section class="sidebar">
-    <ul>
-        <li><a href="/">
-                <i class="fa fa-home" ></i>
-            </a></li>
-        <li><a href="cart">
-                <i class="fa fa-shopping-cart"></i>
-            </a></li>
-        <li><a href="#">
-                <i class="fa fa-phone"></i>
-            </a></li>
-        <li><a id="gototop" href="javascript:;">
-                <i class="fa fa-arrow-up"></i>
-            </a></li>
-    </ul>
-</section>
+
 
 <section class="container" >
     <div id="demo1" class="carousel slide" data-ride="carousel">

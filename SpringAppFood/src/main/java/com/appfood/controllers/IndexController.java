@@ -47,7 +47,7 @@ public class IndexController {
     
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session, Authentication authentication) {
-        model.addAttribute("categories", this.categoryService.getCategories());
+        model.addAttribute("categories", this.categoryService.getCategories("", 0));
         model.addAttribute("cartCounter", Utils.countCart((Map<Integer, Cart>) session.getAttribute("cart")));
         if (authentication != null)
             model.addAttribute("currentUser", this.userService.getUserByUsername(authentication.getName()));
@@ -63,6 +63,7 @@ public class IndexController {
         
         return "index";
     }
+
     @GetMapping("/products/{productId}")
     public String productDetails(Model model, @PathVariable(value = "productId") int id) {
         model.addAttribute("product", this.productService.getProductById(id));

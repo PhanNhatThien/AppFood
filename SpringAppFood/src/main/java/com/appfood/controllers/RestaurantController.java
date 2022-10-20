@@ -8,10 +8,8 @@ import com.appfood.pojo.Category;
 import com.appfood.pojo.Product;
 import com.appfood.pojo.SaleOrder;
 import com.appfood.pojo.User;
-import com.appfood.service.CategoryService;
-import com.appfood.service.OrderService;
-import com.appfood.service.ProductService;
-import com.appfood.service.UserService;
+import com.appfood.service.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +40,9 @@ public class RestaurantController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RestaurantService restaurantService;
     @Autowired
     private ProductService productService;
     @Autowired
@@ -50,13 +51,14 @@ public class RestaurantController {
     private CategoryService categoryService;
 
     private void loadAllList(Model model) {
-        List<Category> categories = categoryService.getCategories();
+        List<Category> categories = categoryService.getCategories("",0);
         model.addAttribute("categories", categories);
     }
 
     private void loadAllService(Model model) {
         model.addAttribute("categoryService", categoryService);
-//        model.addAttribute("employerService", employerService);
+        model.addAttribute("employerService", restaurantService);
+//        model.addAttribute("userService", userService);
     }
 
     @RequestMapping("/restaurant")
@@ -108,7 +110,7 @@ public class RestaurantController {
 //            model.addAttribute("sort", sort);
 //        }
 
-        int maxItems = 20;
+        int maxItems = 3;
         model.addAttribute("maxItems", maxItems);
 
         pre.put("postedByUserId", String.valueOf(this.userService.getUserByUsername(authentication.getName()).getId()));
@@ -121,8 +123,8 @@ public class RestaurantController {
 
         loadAllService(model);
         model.addAttribute("products", products);
-//        model.addAttribute("errMsg", model.asMap().get("errMsg"));
-//        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
         return "restaurant-management";
     }

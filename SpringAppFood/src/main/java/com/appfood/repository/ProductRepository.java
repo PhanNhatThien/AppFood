@@ -25,4 +25,7 @@ public interface ProductRepository {
     List<Comment> getComments(int productId);
     Product getProductById(int productId);
     Comment addComment(String content, int productId);
+    int getMaxItemsInPage();
+    boolean delete(Product product);
+    Boolean addOrUpdate(Product product);
 }

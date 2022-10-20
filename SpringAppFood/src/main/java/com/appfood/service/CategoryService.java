@@ -12,6 +12,6 @@ import java.util.List;
  * @author thien thien
  */
 public interface CategoryService {
-    List<Category> getCategories();
+    List<Category> getCategories(String name, int page);
     Category getById(int id);
 }

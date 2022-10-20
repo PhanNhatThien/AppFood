@@ -8,6 +8,11 @@ import com.appfood.pojo.Category;
 import com.appfood.repository.CategoryRepository;
 import java.util.List;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -25,12 +30,35 @@ public class CategoryRepositoryImpl implements CategoryRepository{
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
+    private final int maxItemsInPage = 3;
+
+    public int getMaxItemsInPage() {
+        return maxItemsInPage;
+    }
     
     @Override
-    public List<Category> getCategories() {
-        Session s = this.sessionFactory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Category");
-        
+    public List<Category> getCategories(String name, int page) {
+//        Session s = this.sessionFactory.getObject().getCurrentSession();
+//        Query q = s.createQuery("From Category");
+
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Category> query = builder.createQuery(Category.class);
+        Root root = query.from(Category.class);
+        query = query.select(root);
+
+        if (!name.isEmpty()) {
+            Predicate p = builder.equal(root.get("name").as(String.class), name.trim());
+            query = query.where(p);
+        }
+
+        Query q = session.createQuery(query);
+
+        if (page != 0) {
+            int max = maxItemsInPage;
+            q.setMaxResults(max);
+            q.setFirstResult((page - 1) * max);
+        }
         return q.getResultList();
     }
 

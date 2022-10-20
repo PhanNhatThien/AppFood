@@ -108,13 +108,13 @@
                         </a>
                         <c:if test="${u.userRole.equals('ROLE_KH')}">
                             <a href="<c:url value="/admin/account/candidate-info/update" />?userId=${u.id}"
-                               data-toggle="tooltip" title="Sửa thông tin ứng viên">
+                               data-toggle="tooltip" title="Sửa thông tin khach hang">
                                 <i class="fa-solid fa-user-pen"></i>
                             </a>
                         </c:if>
                         <c:if test="${u.userRole.equals('ROLE_NH')}">
                             <a href="<c:url value="/admin/account/employer-info/update" />?userId=${u.id}"
-                               data-toggle="tooltip" title="Sửa thông tin nhà tuyển dụng">
+                               data-toggle="tooltip" title="Sửa thông tin nhà hang">
                                 <i class="fa-solid fa-user-pen"></i>
                             </a>
                         </c:if>

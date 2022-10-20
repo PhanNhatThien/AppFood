@@ -8,6 +8,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="<c:url value="/js/product.js" />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
@@ -37,7 +38,7 @@
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <li class="nav-item">
-                        <a class="nav-link text-secondary" href="<c:url value="/admin/products" />">Quan ly san pham</a>
+                        <a class="nav-link text-secondary" href="<c:url value="/admin/product-post" />">Quan ly san pham</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="<c:url value="/admin/account" />">Quan ly tai khoan</a>
@@ -119,3 +120,22 @@
         </div>
     </div>
 </nav>
+
+<section class="sidebar">
+    <ul>
+        <li><a href="/SpringAppFood/">
+                <i class="fa fa-home" ></i>
+            </a></li>
+        <sec:authorize access="hasRole('ROLE_KH')">
+        <li><a href="cart">
+                <i class="fa fa-shopping-cart"></i>
+            </a></li>
+        </sec:authorize>
+        <li><a href="#">
+                <i class="fa fa-phone"></i>
+            </a></li>
+        <li><a id="gototop" href="javascript:;">
+                <i class="fa fa-arrow-up"></i>
+            </a></li>
+    </ul>
+</section>

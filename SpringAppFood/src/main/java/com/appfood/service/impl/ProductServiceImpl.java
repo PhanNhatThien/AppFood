@@ -9,9 +9,14 @@ import com.appfood.pojo.Product;
 import com.appfood.repository.ProductRepository;
 import com.appfood.repository.UserRepository;
 import com.appfood.service.ProductService;
+
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +34,9 @@ public class ProductServiceImpl implements ProductService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private Cloudinary cloudinary;
     
     @Override
     public List<Product> getProducts(Map<String, String> params, int page) {
@@ -89,5 +97,36 @@ public class ProductServiceImpl implements ProductService {
     public Comment addComment(String content, int productId) {
         return this.productRepository.addComment(content, productId);
     }
-    
+    @Override
+    public int getMaxItemsInPage() {
+        return this.productRepository.getMaxItemsInPage();
+    }
+
+    @Override
+    public boolean delete(Product product) {
+        return this.productRepository.delete(product);
+    }
+    @Override
+    public Boolean addOrUpdate(Product product) {
+
+        String image = product.getImage();
+
+        if (!product.getFile().isEmpty()) {
+            Map r = null;
+            try {
+                r = this.cloudinary.uploader().upload(product.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (r != null)
+                product.setImage((String) r.get("secure_url"));
+            else
+                product.setImage(image);
+        }
+
+        return this.productRepository.addOrUpdate(product);
+    }
+
 }

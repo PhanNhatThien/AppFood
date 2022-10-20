@@ -21,8 +21,9 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getCategories() {
-        return this.categoryRepository.getCategories();
+    public List<Category> getCategories(String name, int page) {
+
+        return this.categoryRepository.getCategories(name, page);
     }
 
     @Override

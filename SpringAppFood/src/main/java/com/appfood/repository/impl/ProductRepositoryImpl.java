@@ -20,6 +20,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
+    private final int maxItemsInPage = 5;
+
+    public int getMaxItemsInPage() {
+        return maxItemsInPage;
+    }
     @Autowired
     private Environment env;
 
@@ -64,6 +71,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 predicates.add(p);
             }
 
+
             String fp = params.get("fromPrice");
             if (fp != null) {
                 Predicate p = b.greaterThanOrEqualTo(root.get("price").as(Long.class), Long.parseLong(fp));
@@ -82,6 +90,23 @@ public class ProductRepositoryImpl implements ProductRepository {
             }
             q.where(predicates.toArray(Predicate[]::new));
 
+            if (params.containsKey("name")) {
+                Predicate p1 = b.like(root.get("name").as(String.class),
+                        String.format("%%%s%%", params.get("name")));
+                predicates.add(p1);
+            }
+
+            if (params.containsKey("description")) {
+                Predicate p2 = b.like(root.get("description").as(String.class),
+                        String.format("%%%s%%", params.get("description")));
+                predicates.add(p2);
+            }
+
+            if (params.containsKey("price")) {
+                Predicate p3 = b.like(root.get("price").as(String.class),
+                        String.format("%%%s%%", params.get("price")));
+                predicates.add(p3);
+            }
 
         }
 
@@ -92,7 +117,24 @@ public class ProductRepositoryImpl implements ProductRepository {
             query.setFirstResult(start);
             query.setMaxResults(size);
 
+
         }
+
+//        if (page != 0) {
+//            int index;
+//            if (maxItems == 0) {
+//                index = (page - 1) * maxItemsInPage;
+//                query.setFirstResult(index);
+//                query.setMaxResults(maxItemsInPage);
+//            } else {
+//                index = (page - 1) * maxItems;
+//                query.setFirstResult(index);
+//                query.setMaxResults(maxItems);
+//            }
+//        }
+
+
+
 
         return query.getResultList();
     }
@@ -240,5 +282,33 @@ public class ProductRepositoryImpl implements ProductRepository {
         session.save(c);
 
         return c;
+    }
+
+    @Override
+    public boolean delete(Product product) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.delete(product);
+            return true;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean addOrUpdate(Product product) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            if (product.getId() > 0)
+                session.update(product);
+            else
+                session.save(product);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 }

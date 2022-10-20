@@ -94,5 +94,17 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Thêm tài khoản" />
         <put-attribute name="content" value="/WEB-INF/jsp/add-account.jsp" />
     </definition>
+    <definition name="admin-product-post" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý bài viết" />
+        <put-attribute name="content" value="/WEB-INF/jsp/admin-product-post.jsp" />
+    </definition>
+    <definition name="view-product-post" extends="baseLayout">
+        <put-attribute name="title" value="Xem thông tin tin bai viet" />
+        <put-attribute name="content" value="/WEB-INF/jsp/view-product-post.jsp" />
+    </definition>
+    <definition name="add-product-post" extends="baseLayout">
+        <put-attribute name="title" value="Thêm bài viết" />
+        <put-attribute name="content" value="/WEB-INF/jsp/add-product-post.jsp" />
+    </definition>
 </tiles-definitions>
  
