@@ -38,5 +38,18 @@ $(document).ready(function(){
     splide.mount();
 }) 
 
+// xoa bo loc
+function removeFilter() {
+    window.location.href = window.location.href.split('?')[0]
+}
 
-
+function updateQueryStringParameter(key, value) {
+    let uri = window.location.href
+    let re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    let separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        window.location.href = uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+        window.location.href = uri + separator + key + "=" + value;
+    }
+}

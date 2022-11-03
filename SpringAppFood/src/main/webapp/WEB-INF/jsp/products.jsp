@@ -10,7 +10,7 @@
 
 
 
-<h1 class="text-center text-danger">QUAN LY SAN PHAM</h1>
+<h1 class="text-center text-danger">QUẢN LÝ SẢN PHẨM</h1>
 
 <c:url value="/admin/products" var="action" />
 <form:form method="post" action="${action}" modelAttribute="product">
@@ -18,11 +18,11 @@
 
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" path="name" class="form-control" id="name" placeholder="name" name="name" />
-        <label for="name">Ten san pham</label>
+        <label for="name">Tên sản phẩm </label>
     </div>
     <div class="form-floating mb-3 mt-3">
         <form:input type="number" path="price" class="form-control" id="price" placeholder="price" name="name" />
-        <label for="name">Gia san pham</label>
+        <label for="name">Gía sản phẩm </label>
     </div>
     <div class="form-floating">
         <form:select path="categoryId" class="form-select" id="cate" name="cate">
@@ -30,12 +30,12 @@
                 <option value="${c.id}">${c.name}</option>
             </c:forEach>
         </form:select>
-        <label for="cate" class="form-label">Danh muc san pham</label>
+        <label for="cate" class="form-label">Danh mục sản phẩm </label>
     </div>
         
     <div>
         <br>
-        <input type="submit" value="Them san pham" class="btn btn-danger" />
+        <input type="submit" value="Thêm sản phẩm" class="btn btn-danger" />
     </div>
 </form:form>
 
@@ -51,6 +51,7 @@
 
     </tbody>
 </table>
+
 
 <script src="<c:url value="/js/product.js" />"></script>
 <script>

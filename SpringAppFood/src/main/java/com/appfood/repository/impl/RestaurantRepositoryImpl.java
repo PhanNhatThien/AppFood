@@ -3,6 +3,7 @@ package com.appfood.repository.impl;
 
 import com.appfood.pojo.Restaurant;
 import com.appfood.repository.RestaurantRepository;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -32,5 +33,20 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
         org.hibernate.query.Query q = session.createQuery(query);
         return (Restaurant) q.getSingleResult();
+    }
+    @Override
+    public boolean addOrUpdate(Restaurant restaurant) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            if (restaurant.getId() > 0)
+                session.update(restaurant);
+            else
+                session.save(restaurant);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 }

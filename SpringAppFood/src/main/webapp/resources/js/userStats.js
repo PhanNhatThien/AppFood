@@ -11,7 +11,7 @@ function uStats(labels, data) {
         data: {
             labels: labels,
             datasets: [{
-                    label: 'Tong san pham kinh doanh cua nha hang',
+                    label: 'Tổng sản phẩm kinh doanh của cửa hàng ',
                     data: data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -41,4 +41,36 @@ function uStats(labels, data) {
         }
     });
 }
+function generateColors() {
+    let r = parseInt(Math.random() * 255);
+    let g = parseInt(Math.random() * 255);
+    let b = parseInt(Math.random() * 255);
+    return `rgb(${r}, ${g}, ${b})`
+}
 
+function userRoleChart(id, userRoleLabels = [], userRoleInfos = []) {
+    let colors = []
+    for (let i = 0; i < userRoleLabels.length; i++)
+        colors.push(generateColors())
+
+    const data = {
+        labels: userRoleLabels,
+        datasets: [{
+            label: 'Thống kê số lượng các tài khoản được tạo theo loại tài khoản',
+            data: userRoleInfos,
+            backgroundColor: colors,
+            hoverOffset: 4
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: data,
+    };
+
+    let ctx = document.getElementById(id).getContext("2d")
+    new Chart(ctx, config)
+}
+function refreshPage() {
+    window.location.reload();
+}

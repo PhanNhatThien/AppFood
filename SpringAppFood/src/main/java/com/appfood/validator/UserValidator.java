@@ -1,5 +1,6 @@
 package com.appfood.validator;
 
+import com.appfood.pojo.Category;
 import com.appfood.pojo.User;
 import com.appfood.utils.Utils;
 import com.appfood.service.UserService;
@@ -15,9 +16,10 @@ public class UserValidator implements Validator {
     @Autowired
     private UserService userService;
 
+
     @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+    public boolean supports(Class<?> clazz) {
+        return User.class.equals(clazz);
     }
 
     @Override
@@ -31,11 +33,12 @@ public class UserValidator implements Validator {
 //        if (userService.getUsers(user.getUsername(), 0).size() > 0)
 //            errors.rejectValue("username", "", "Tên đăng nhập đã tồn tại");
 
-//        if (user.getUsername().isEmpty())
-//            errors.rejectValue("username", "", "Tên đăng nhập không được bỏ trống");
+        if (user.getUsername().isEmpty())
+            errors.rejectValue("username", "", "Tên đăng nhập không được bỏ trống");
 
-        if (user.getFirstName().contains(" "))
-            errors.rejectValue("firstName", "product.price.maxErr");
+
+        if (user.getFirstName().isEmpty())
+            errors.rejectValue("firstName", "", "Tên không được bỏ trống");
 //
 //        if (user.getUsername().length() < usernameMinLength)
 //            errors.rejectValue("username", "", "Tên đăng nhập không ít hơn " + usernameMinLength + " ký tự");
@@ -44,14 +47,14 @@ public class UserValidator implements Validator {
 //            errors.rejectValue("username", "", "Tên đăng nhập không quá " + usernameMaxLength + " ký tự");
 //
 //        // validate password
-//        if (user.getPassword().isEmpty())
-//            errors.rejectValue("password", "", "Mật khẩu không được bỏ trống");
-//
+        if (user.getPassword().isEmpty())
+            errors.rejectValue("password", "", "Mật khẩu không được bỏ trống");
+
 //        if (!user.getPassword().equals(user.getConfirmPassword()))
 //            errors.rejectValue("password", "", "Mật khẩu và xác nhận mật khẩu chưa trùng khớp");
 //
-//        if (user.getPassword().contains(" "))
-//            errors.rejectValue("password", "", "Mật khẩu không chứa khoảng trắng");
+        if (user.getPassword().contains(" "))
+            errors.rejectValue("password", "", "Mật khẩu không chứa khoảng trắng");
 //
 //        if (user.getPassword().length() < passwordMinLength)
 //            errors.rejectValue("password", "", "Mật khẩu cần có tối thiểu " + passwordMinLength + " ký tự");

@@ -31,4 +31,20 @@ public class CategoryServiceImpl implements CategoryService{
         return this.categoryRepository.getById(id);
     }
 
+    @Override
+    public long count() {
+        return this.categoryRepository.count();
+    }
+    @Override
+    public int getMaxItemsInPage() {
+        return this.categoryRepository.getMaxItemsInPage();
+    }
+    @Override
+    public boolean addOrUpdate(Category category) {
+        return this.categoryRepository.addOrUpdate(category);
+    }
+    @Override
+    public boolean delete(Category category) {
+        return this.categoryRepository.delete(category);
+    }
 }

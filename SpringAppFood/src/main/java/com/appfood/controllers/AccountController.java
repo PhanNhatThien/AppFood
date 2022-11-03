@@ -3,9 +3,11 @@ package com.appfood.controllers;
 import com.appfood.pojo.Product;
 import com.appfood.pojo.Restaurant;
 import com.appfood.pojo.User;
+import com.appfood.service.RestaurantService;
 import com.appfood.service.UserService;
 import com.appfood.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ public class AccountController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RestaurantService restaurantService;
     @Autowired
     private UserValidator userValidator;
 
@@ -188,6 +192,29 @@ public class AccountController {
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/admin/account";
+    }
+
+    @RequestMapping("/info-account/view")
+    public String infoAccountView(Model model, Authentication authentication) {
+
+        try {
+
+            int userId = this.userService.getUserByUsername(authentication.getName()).getId();
+            model.addAttribute("userId", userId);
+        } catch (NoResultException nre){
+            System.out.println(nre.getMessage());
+        }
+
+        Restaurant restaurant;
+
+        try {
+            restaurant = restaurantService.getByUserId(userService.getUserByUsername(authentication.getName()).getId());
+            model.addAttribute("restaurant", restaurant);
+        } catch (NoResultException nre){
+            System.out.println(nre.getMessage());
+        }
+
+        return "info-account-view";
     }
 
 }

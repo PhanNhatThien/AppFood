@@ -14,7 +14,7 @@
 
 
 <footer>
-    <sec:authorize access="hasRole('ROLE_KH')">
+
     <section  class="container">
         <div class="head">
             <div class="pays">
@@ -23,42 +23,39 @@
                 </div>
                 <div class="pay">
 
-                    <div><a href="#"><img class="img-pay"src="resources/images/visa.png" alt="visa"></a></div>
-                    <div><a href="#"><img class="img-pay"src="resources/images/mastercard.png" alt="mastercard"></a></div>
-                    <div><a href="#"><img class="img-pay"src="resources/images/jcb.png" alt="jcb"></a></div>
-                    <div><a href="#"><img class="img-pay"src="resources/images/cash.png" alt="cash"></a></div>
-                    <div><a href="#"><img class="img-pay"src="resources/images/internet-banking.png" alt="internet-banking"></a></div>
-
-
-
+                    <div><a href="#"><img class="img-pay"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/visa_a9uerm.png" alt="visa"></a></div>
+                    <div><a href="#"><img class="img-pay"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/mastercard_gntkie.png" alt="mastercard"></a></div>
+                    <div><a href="#"><img class="img-pay"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/jcb_gf8nwr.png" alt="jcb"></a></div>
+                    <div><a href="#"><img class="img-pay"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348917/samples/food/cash_lceska.png" alt="cash"></a></div>
+                    <div><a href="#"><img class="img-pay"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/internet-banking_q9wgfz.png" alt="internet-banking"></a></div>
                 </div>
             </div>
-            <div><img src="resources/images/sp_footer.png" /></div>
+            <div><img src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/sp_footer_rixk2v.png" /></div>
             <div class ="apps">
                 <div>
                     <h4 class="foot">Tải ứng dụng trên</h4>
                 </div>
                 <div class="app">
-                    <div><a href="#"><img class="img-app" src="resources/images/appstore.png" alt="appstore"></a></div>
-                    <div><a href="#"><img class="img-app"src="resources/images/playstore.png" alt="playstore"></a></div>
+                    <div><a href="#"><img class="img-app" src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348917/samples/food/appstore_cf3okl.png" alt="appstore"></a></div>
+                    <div><a href="#"><img class="img-app"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/playstore_b6262p.png" alt="playstore"></a></div>
 
                 </div>
             </div>
-            <div><img src="resources/images/sp_footer.png" /></div>
+            <div><img src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/sp_footer_rixk2v.png" /></div>
             <div class="connections">
                 <div>
                     <h4 class="foot">Kết nối với chúng tôi</h4>
                 </div>
                 <div class="connection">
-                    <div><a href="#"><img class="img-connection" src="resources/images/fb.png" alt="facebook"></a></div>
-                    <div><a href="#"><img class="img-connection"src="resources/images/youtube.png" alt="youtube"></a></div>
-                    <div><a href="#"><img class="img-connection"src="resources/images/zalo.png" alt="zalo"></a></div>
+                    <div><a href="#"><img class="img-connection" src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348917/samples/food/fb_odhsg8.png" alt="facebook"></a></div>
+                    <div><a href="#"><img class="img-connection"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/youtube_jun4yv.png" alt="youtube"></a></div>
+                    <div><a href="#"><img class="img-connection"src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1666348918/samples/food/zalo_yqza4m.png" alt="zalo"></a></div>
 
                 </div>
             </div>
         </div>
     </section>
-    </sec:authorize>
+
     <section class="container">
         <div class="infos-footer" style="">
             <div class="info-footer">

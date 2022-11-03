@@ -42,8 +42,9 @@
 
     </head>
     <body>
-        <tiles:insertAttribute name="header" />
-
+        <div >
+            <tiles:insertAttribute name="header" />
+        </div>
         <div class="container">
             <tiles:insertAttribute name="content" />
         </div><!-- comment -->

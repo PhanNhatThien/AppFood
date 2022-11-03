@@ -29,8 +29,7 @@ public class HibernateConfig {
     
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
-        LocalSessionFactoryBean sessionFactory
-                = new LocalSessionFactoryBean();
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setPackagesToScan(new String[]{
             "com.appfood.pojo"
         });
@@ -41,15 +40,11 @@ public class HibernateConfig {
     
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource
-                = new DriverManagerDataSource();
-        dataSource.setDriverClassName(
-                env.getProperty("hibernate.connection.driverClass"));
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("hibernate.connection.driverClass"));
         dataSource.setUrl(env.getProperty("hibernate.connection.url"));
-        dataSource.setUsername(
-                env.getProperty("hibernate.connection.username"));
-        dataSource.setPassword(
-                env.getProperty("hibernate.connection.password"));
+        dataSource.setUsername(env.getProperty("hibernate.connection.username"));
+        dataSource.setPassword(env.getProperty("hibernate.connection.password"));
         return dataSource;
     }
     
@@ -62,10 +57,8 @@ public class HibernateConfig {
     
     @Bean
     public HibernateTransactionManager transactionManager() {
-        HibernateTransactionManager transactionManager
-                = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(
-                getSessionFactory().getObject());
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(getSessionFactory().getObject());
         return transactionManager;
     }
     

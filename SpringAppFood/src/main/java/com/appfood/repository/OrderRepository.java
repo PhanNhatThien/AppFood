@@ -5,6 +5,7 @@
 package com.appfood.repository;
 
 import com.appfood.pojo.Cart;
+import com.appfood.pojo.Product;
 import com.appfood.pojo.SaleOrder;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface OrderRepository {
     boolean addReceipt(Map<Integer, Cart> cart);
     List<SaleOrder> getByActive(int active);
     SaleOrder getOrderById(int orderId);
+    List<SaleOrder> getOrders(Map<String, String> params, int page);
+    boolean delete(SaleOrder order);
 }

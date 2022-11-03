@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -68,6 +69,38 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         return session.get(Category.class, id);
     }
-    
-    
+
+    @Override
+    public long count() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("Select Count(*) From Category");
+
+        return Long.parseLong(q.getSingleResult().toString());
+    }
+    @Override
+    public boolean addOrUpdate(Category category) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            if (category.getId() > 0)
+                session.update(category);
+            else
+                session.save(category);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    @Override
+    public boolean delete(Category category) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.delete(category);
+            return true;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return false;
+    }
+
 }

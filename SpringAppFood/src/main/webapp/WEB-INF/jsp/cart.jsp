@@ -9,17 +9,17 @@
 <h1 class="text-center text-danger">GIỎ HÀNG</h1>
 
 <c:if test="${carts == null}">
-    <h4 class="text-center text-danger">Khong co san pham nao trong gio</h4>
+    <h4 class="text-center text-danger">Không có sản phẩm nào trong giỏ</h4>
 </c:if>
 
 
 <c:if test="${carts != null}">
     <table class="table">
         <tr>
-            <th>Ma san pham</th>
-            <th>Ten san pham</th>
-            <th>Don gia</th>
-            <th>So luong</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
             <th></th>
         </tr>
         <c:forEach items="${carts}" var="c">
@@ -37,16 +37,22 @@
                 </td>
                 <td>
                     <input type="button"
-                       value="Xoa" 
+                       value="Xóa"
                        onclick="deleteCart(${c.productId})"
                        class="btn btn-danger"/>
                 </td>
             </tr>
         </c:forEach>
+        <tr>
+            <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
+            </td>
+
+            <td colspan="2" class="hidden-xs"> </td>
+            <td class="hidden-xs text-center"><h4>Tổng tiền:<span id="amountCart">${cartStats.amount} VND</h4></strong>
+            </td>
+            <td><a class="btn btn-success btn-block" onclick="pay()">Thanh toán <i class="fa fa-angle-right"></i></a>
+            </td>
+        </tr>
     </table>
-    <div>
-        <h4 class="text-info">Tong tien:    <span id="amountCart">${cartStats.amount}</span> VND</h4>
-    </div>
-        <input type="button" onclick="pay()" value="THANH TOAN" class="btn btn-danger"/>
 </c:if>
 

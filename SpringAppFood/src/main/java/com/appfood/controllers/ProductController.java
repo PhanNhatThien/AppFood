@@ -81,7 +81,7 @@ public class ProductController {
 
         model.addAttribute("currentPage", page);
         model.addAttribute("counter", productsSize.size());
-        model.addAttribute("jobPostService", productService);
+        model.addAttribute("productService", productService);
 
         // another
         model.addAttribute("userService", userService);
@@ -176,10 +176,10 @@ public class ProductController {
 
         boolean deleteCheck = productService.delete(product);
         if (product != null && deleteCheck) {
-            sucMsg = String.format("Xoá thành công mon'%s'", product.getName());
+            sucMsg = String.format("Xoá thành công món'%s'", product.getName());
         } else {
             assert product != null;
-            errMsg = String.format("Xoá không thành công mon '%s'", product.getName());
+            errMsg = String.format("Xoá không thành công món '%s'", product.getName());
         }
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);

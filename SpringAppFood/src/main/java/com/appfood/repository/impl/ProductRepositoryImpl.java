@@ -44,7 +44,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
-    private final int maxItemsInPage = 5;
+    private final int maxItemsInPage = 20;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;
@@ -62,6 +62,9 @@ public class ProductRepositoryImpl implements ProductRepository {
         CriteriaQuery<Product> q = b.createQuery(Product.class);
         Root root = q.from(Product.class);
         q.select(root);
+        q = q.orderBy(b.desc(root.get("createdDate")));
+
+
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
@@ -88,25 +91,27 @@ public class ProductRepositoryImpl implements ProductRepository {
                 Predicate p = b.equal(root.get("categoryId"), Integer.parseInt(cateId));
                 predicates.add(p);
             }
-            q.where(predicates.toArray(Predicate[]::new));
+
 
             if (params.containsKey("name")) {
-                Predicate p1 = b.like(root.get("name").as(String.class),
+                Predicate p = b.like(root.get("name").as(String.class),
                         String.format("%%%s%%", params.get("name")));
-                predicates.add(p1);
+                predicates.add(p);
             }
 
             if (params.containsKey("description")) {
-                Predicate p2 = b.like(root.get("description").as(String.class),
+                Predicate p = b.like(root.get("description").as(String.class),
                         String.format("%%%s%%", params.get("description")));
-                predicates.add(p2);
+                predicates.add(p);
             }
 
             if (params.containsKey("price")) {
-                Predicate p3 = b.like(root.get("price").as(String.class),
+                Predicate p = b.like(root.get("price").as(String.class),
                         String.format("%%%s%%", params.get("price")));
-                predicates.add(p3);
+                predicates.add(p);
             }
+
+            q = q.where(predicates.toArray(Predicate[]::new));
 
         }
 
@@ -310,5 +315,25 @@ public class ProductRepositoryImpl implements ProductRepository {
         }
 
         return false;
+    }
+    @Override
+    public List<Product> getByActive(int active) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Product> query = builder.createQuery(Product.class);
+        Root root = query.from(Product.class);
+        query = query.select(root);
+
+//        Predicate p1 = builder.equal(root.get("userRole").as(String.class), role.trim());
+        Predicate p1 = builder.equal(root.get("active").as(Integer.class), active);
+
+        query = query.where(p1);
+
+        query = query.orderBy(builder.desc(root.get("id")));
+
+        javax.persistence.Query q = session.createQuery(query);
+
+
+        return q.getResultList();
     }
 }

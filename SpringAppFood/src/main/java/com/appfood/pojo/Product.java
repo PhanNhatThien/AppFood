@@ -92,9 +92,6 @@ public class Product implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JsonProperty("user")
     private User postedByUser;
-
-
-
     @Transient
     private int postedByUserId;
     @Transient

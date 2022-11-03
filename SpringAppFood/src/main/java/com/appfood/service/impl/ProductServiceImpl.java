@@ -6,6 +6,7 @@ package com.appfood.service.impl;
 
 import com.appfood.pojo.Comment;
 import com.appfood.pojo.Product;
+import com.appfood.pojo.SaleOrder;
 import com.appfood.repository.ProductRepository;
 import com.appfood.repository.UserRepository;
 import com.appfood.service.ProductService;
@@ -55,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean addProduct(Product p) {
-        p.setImage("https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674849/cld-sample-4.jpg");
+//        p.setImage("https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674849/cld-sample-4.jpg");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         p.setPostedByUser(this.userRepository.getUserByUsername(authentication.getName()));
         p.setCreatedDate(new Date());
@@ -128,5 +129,8 @@ public class ProductServiceImpl implements ProductService {
 
         return this.productRepository.addOrUpdate(product);
     }
-
+    @Override
+    public List<Product> getByActive(int active) {
+        return this.productRepository.getByActive(active);
+    }
 }

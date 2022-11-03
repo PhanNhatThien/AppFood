@@ -12,15 +12,16 @@
 
 
 <c:if test="${product.id == 0}">
-    <h1 class="text-center dark-color">ĐĂNG TIN </h1>
+    <h1 class="text-center dark-color">ĐĂNG SẢN PHẨM </h1>
 </c:if>
 <c:if test="${product.id > 0}">
-    <h1 class="text-center dark-color">CHỈNH SỬA TIN ${jobPost.id}</h1>
+    <h1 class="text-center dark-color">CHỈNH SẢN PHẨM ${jobPost.id}</h1>
 </c:if>
+
 
 <c:url value="/restaurant/post/add-or-update" var="action"/>
 
-<form:form action="${action}" method="post" modelAttribute="product">
+<form:form action="${action}" method="post" enctype="multipart/form-data" modelAttribute="product">
     <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
     <form:hidden path="id"/>
     <div class="form-group">
@@ -35,11 +36,28 @@
         <label>Giá</label>
         <form:input path="price" class="form-control"/>
     </div>
+    <div class="form-group">
+        <label>Tình trạng</label>
+        <form:input path="active" class="form-control"/>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            <label for="image">Ảnh</label>
+            <form:input type="file" id="imgInp" path="file"
+                        accept="image/*" class="form-control"/>
+        </div>
+         <div class="col text-center">
+            <img src="<c:url value="${product.image}"/>"
+                 style="height: 200px; margin-top: 10px; border: 1px solid black;"
+                 class="img-fluid rounded" id="blah" alt="avatar">
+        </div>
+
+    </div>
     
 
 
     <div class="form-group">
-        <label>Loại công việc</label>
+        <label>Loại</label>
         <form:select path="categoryById" class="form-select" >
             <c:forEach items="${categories}" var="c" >
                 <option value="${c.id}" >${c.name}</option>
@@ -49,7 +67,7 @@
     
     <form:hidden path="postedByUserId" value="${currentUser.id}" />
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top:20px;">
         <c:if test="${product.id == 0}">
             <button type="submit" name="submit" value="submit" class="btn btn-primary">Thêm</button>
         </c:if>

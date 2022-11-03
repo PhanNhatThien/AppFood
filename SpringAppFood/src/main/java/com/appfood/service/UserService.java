@@ -21,6 +21,7 @@ public interface UserService extends UserDetailsService{
     User getUserById(int userId);
     List<User> getByRole(String role,int page, int active);
     int getMaxItemsInPage();
+    long count();
     List<User> getUsersMultiCondition(Map<String, String> params, int page);
     boolean delete(User user);
 }

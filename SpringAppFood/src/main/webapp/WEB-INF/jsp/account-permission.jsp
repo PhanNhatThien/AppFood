@@ -8,12 +8,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
-<h1 class="text-center dark-color">XÁC NHẬN NHÀ HÀNG</h1>
+<h1 class="text-center dark-color">XÁC NHẬN TÀI KHOẢN NHÀ HÀNG</h1>
 
 <c:if test="${users.size() == 0}">
     <div class="alert alert-success mt-4 d-flex justify-content-center align-items-center" style="height: 80px"
          role="alert">
-        <h5 class="m-0">TẤT CẢ NHÀ TUYỂN DỤNG ĐÃ ĐƯỢC XÁC NHẬN!</h5>
+        <h5 class="m-0">TẤT CẢ NHÀ HÀNG ĐÃ ĐƯỢC XÁC NHẬN!</h5>
     </div>
 </c:if>
 
@@ -27,13 +27,12 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center" style="width: 10%">Xac nhan</th>
+                <th class="text-center" style="width: 10%">Xác nhận</th>
                 <th class="text-center" style="width: 5%">STT</th>
                 <th>Tên đăng nhập</th>
                 <th>Số điện thoại</th>
                 <th>Email</th>
                 <th>Loại tài khoản</th>
-                
             </tr>
         </thead>
         <tbody>

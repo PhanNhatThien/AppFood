@@ -4,29 +4,21 @@
 
 
 <div class="container">
-    <h1 class="text-center dark-color">QUẢN LÝ BAI VIET</h1>
+    <h1 class="text-center dark-color">QUẢN LÝ TẤT CẢ SẢN PHẨM</h1>
 
     <section class="d-flex justify-content-center">
         <form class="mt-3 w-50">
             <div class="form-group">
-                <label for="name">Ten</label>
+                <label for="name">Tên</label>
                 <input class="form-control" name="name" id="name" value="${name}">
-            </div>
-
-            <div class="form-group">
-                <label for="description">Mo ta</label>
-                <input class="form-control" name="description" id="description" value="${description}">
-            </div>
-
-            <div class="form-group">
-                <label for="price">Gia</label>
-                <input class="form-control" name="price" id="price" value="${price}">
             </div>
             <button type="submit" class="btn btn-info">Tra cứu</button>
             <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
         </form>
     </section>
 </div>
+
+
 
 <div class="container">
     <c:if test="${sucMsg != null}">
@@ -55,11 +47,11 @@
         <tr>
             <th class="text-center" style="width: 15%">Thực thi</th>
 
-            <th>Ten</th>
-            <th>Mo ta</th>
-            <th>Nhà hang</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th>Nhà hàng</th>
             <th>Đăng bởi</th>
-            <th>Loai</th>
+            <th>Loại</th>
         </tr>
         </thead>
         <tbody>
@@ -91,13 +83,17 @@
     </table>
 
     <ul class="pagination d-flex justify-content-center mt-4">
-        <c:forEach begin="1" end="${Math.ceil(counter/4)}" var="page">
+        <c:forEach begin="1" end="${Math.ceil(counter/productService.maxItemsInPage)}" var="page">
             <li class="page-item">
-                <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
+                <a class="page-link" href="${url}?page=${page}">${page}</a>
             </li>
         </c:forEach>
     </ul>
+
+
+
 </div>
+
 
 <script>
     $(document).ready(function () {

@@ -10,6 +10,7 @@ import com.appfood.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -44,15 +45,22 @@ public class UserController {
     }
     
     @PostMapping("/register")
-    public String register(Model model,@ModelAttribute(value = "user") User user){
-        String errMsg = "";
+    public String register(Model model, @ModelAttribute(value = "user") User user, BindingResult result){
+        String errMsg = null;
+        String sucMsg = null;
+
+        userValidator.validate(user, result);
+        if (result.hasErrors())
+            return "register";
+
+
         if(user.getPassword().equals(user.getConfirmPassword())){
             if(this.userDetailsService.addUser(user)==true)
                 return "redirect:/login";
             else
-                errMsg = "Da co loi";
+                errMsg = "Đã có lỗi xảy ra";
         }else
-            errMsg = "Mat Khau Khong Khop";
+            errMsg = "Mật khẩu không khớp";
         
         model.addAttribute("errMsg", errMsg);
         

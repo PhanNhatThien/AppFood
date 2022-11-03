@@ -23,5 +23,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant getByUserId(int userId) {
         return this.restaurantRepository.getByUserId(userId);
     }
+    @Override
+    public boolean addOrUpdate(Restaurant restaurant) {
+        return this.restaurantRepository.addOrUpdate(restaurant);
+    }
 
 }

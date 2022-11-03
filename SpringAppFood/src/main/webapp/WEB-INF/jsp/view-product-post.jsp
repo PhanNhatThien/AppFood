@@ -4,7 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <h1 class="text-center dark-color">THÔNG TIN BAI VIET</h1>
+    <h1 class="text-center dark-color">THÔNG TIN SẢN PHẨM</h1>
 
     <div class="container mt-3">
         <table class="table table-striped">
@@ -26,7 +26,7 @@
                 <td class="border-left">${product.id}</td>
             </tr>
             <tr>
-                <th style="width: 30%" scope="row">Ten</th>
+                <th style="width: 30%" scope="row">Tên</th>
                 <td class="border-left">${product.name}</td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                 <td class="border-left">${product.description}</td>
             </tr>
             <tr>
-                <th style="width: 30%" scope="row">gia</th>
+                <th style="width: 30%" scope="row">gía</th>
                 <td class="border-left">${product.price}</td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
                 <td class="border-left">${userService.getUserById(product.postedByUser.id).username}</td>
             </tr>
             <tr>
-                <th style="width: 30%" scope="row">Nha hang</th>
+                <th style="width: 30%" scope="row">Nhà hàng</th>
                 <td class="border-left">${restaurantService.getByUserId(product.postedByUser.id).name}</td>
             </tr>
             </tbody>

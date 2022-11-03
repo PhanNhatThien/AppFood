@@ -6,8 +6,8 @@
         <table class="table">
             <tr>
                 <th>Id</th>
-                <th>Ten nha hang</th>
-                <th>Tong so san pham</th>
+                <th>Tên nhà hàng</th>
+                <th>Tổng số sản phẩm </th>
             </tr>
             <c:forEach items="${usersStats}" var="c">
                 <tr>

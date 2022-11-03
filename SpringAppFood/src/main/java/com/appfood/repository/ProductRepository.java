@@ -6,6 +6,8 @@ package com.appfood.repository;
 
 import com.appfood.pojo.Comment;
 import com.appfood.pojo.Product;
+import com.appfood.pojo.SaleOrder;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +30,6 @@ public interface ProductRepository {
     int getMaxItemsInPage();
     boolean delete(Product product);
     Boolean addOrUpdate(Product product);
+    List<Product> getByActive(int active);
+
 }

@@ -20,13 +20,13 @@ public class ProductValidator implements Validator {
         Product product = (Product) target;
 
         // validate name
-        if (product.getName().length() > 100)
-            errors.rejectValue("name", "", "Tên bài viết không quá 100 ký tự");
+        if (product.getName().isEmpty())
+            errors.rejectValue("name", "", "Tên không được để trống");
 
 
         // validate description
-        if (product.getDescription().length() > 100)
-            errors.rejectValue("description", "", "Mo ta không quá 100 ký tự");
+        if (product.getDescription().length() > 15)
+            errors.rejectValue("description", "", "Mô tả không quá 15 ký tự");
 
 
     }

@@ -62,15 +62,15 @@
         <form:input path="firstName" class="form-control"/>
     </div>
     <div class="form-group">
-        <label>ho</label>
+        <label>họ</label>
         <form:input path="lastName" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Loại tài khoản <span style="color: red">*</span></label>
         <form:select path="userRole" class="custom-select">
-            <form:option value="ROLE_KH" label="Khach hang"
+            <form:option value="ROLE_KH" label="Khách hàng"
                          selected="${user.userRole.equals('ROLE_KH') ? true : ''}"/>
-            <form:option value="ROLE_NH" label="Nha hang"
+            <form:option value="ROLE_NH" label="Nhà hàng"
                          selected="${user.userRole.equals('ROLE_NH') ? true : ''}"/>
             <form:option value="ROLE_ADMIN" label="Admin"
                          selected="${user.userRole.equals('ROLE_ADMIN') ? true : ''}"/>

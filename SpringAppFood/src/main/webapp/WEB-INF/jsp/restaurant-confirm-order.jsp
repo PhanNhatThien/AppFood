@@ -14,11 +14,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center" style="width: 10%">Xac nhan</th>
+                <th class="text-center" style="width: 10%">Xác nhận</th>
                 <th class="text-center" style="width: 5%">STT</th>
-                <th> Ma don hang</th>
-                <th>Gia</th>
-                <th>Ngay tao</th>
+                <th> Mã đơn hàng </th>
+                <th>Gía </th>
+                <th>Ngày tạo </th>
                 
             </tr>
         </thead>

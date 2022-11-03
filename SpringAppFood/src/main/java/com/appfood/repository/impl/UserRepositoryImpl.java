@@ -49,11 +49,11 @@ public class UserRepositoryImpl implements UserRepository {
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<User> q = b.createQuery(User.class);
         Root root = q.from(User.class);
-        q.select(root);
+        q=q.select(root);
 
-        q.where(b.equal(root.get("username"), username));
+        q=q.where(b.equal(root.get("username").as(String.class), username));
 
-        Query query = session.createQuery(q);
+        org.hibernate.query.Query query = session.createQuery(q);
         return (User) query.getSingleResult();
     }
 
@@ -228,6 +228,14 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
         return false;
+    }
+
+    @Override
+    public long count() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("Select Count(*) From User");
+
+        return Long.parseLong(q.getSingleResult().toString());
     }
 
 }

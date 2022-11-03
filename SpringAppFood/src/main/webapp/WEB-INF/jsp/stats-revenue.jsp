@@ -2,14 +2,14 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<h1 class="text-center text-info">THONG KE BAO CAO</h1>
+<h1 class="text-center text-info">THỐNG KÊ DOANH THU  </h1>
 
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <table class="table">
             <tr>
                 <th>Id</th>
-                <th>Ten san pham</th>
+                <th>Tên sản phẩm</th>
                 <th>Doanh thu</th>
             </tr>
             <c:forEach items="${revenuStats}" var="c">
@@ -35,9 +35,9 @@
             </div>
             <div class="mb-3">
 
-                <input type="number" class="form-control" placeholder="Nhap nam" name="year">
+                <input type="number" class="form-control" placeholder="Nhập năm" name="year">
             </div>
-            <button type="submit" class="btn btn-primary">Loc du lieu</button>
+            <button type="submit" class="btn btn-primary">Lọc dữ liệu</button>
         </form>
         <canvas id="myChart2"></canvas>
     </div>

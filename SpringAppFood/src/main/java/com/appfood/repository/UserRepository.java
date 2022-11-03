@@ -19,6 +19,7 @@ public interface UserRepository {
     User getUserByUsername(String username);
     List<User> getByRole(String role,int page, int active);
     int getMaxItemsInPage();
+    long count();
     List<User> getUsersMultiCondition(Map<String, String> params, int page);
     boolean delete(User user);
 

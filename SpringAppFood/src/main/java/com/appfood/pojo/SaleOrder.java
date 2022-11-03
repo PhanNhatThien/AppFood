@@ -4,6 +4,8 @@
  */
 package com.appfood.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -55,6 +57,7 @@ public class SaleOrder implements Serializable {
     private Date createdDate;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonProperty("user")
     private User userId;
     @Column(name = "active")
     private int active;

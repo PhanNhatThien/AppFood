@@ -61,6 +61,6 @@
         </form:select>
     </div>
     <div style="margin-top:20px" class="form-group">
-        <input type="submit" value="DANG KY" class="btn btn-primary" />
+        <input type="submit" value="Đăng Ký " class="btn btn-primary" />
     </div>
 </form:form>

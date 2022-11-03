@@ -3,15 +3,15 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<h1 class="text-center text-info">THONG KE BAO CAO</h1>
+<h1 class="text-center text-info">THỐNG KÊ THEO DANH MỤC</h1>
 
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <table class="table">
             <tr>
                 <th>Id</th>
-                <th>Ten danh muc</th>
-                <th>So san pham</th>
+                <th>Tên danh mục </th>
+                <th>Số sản phẩm </th>
             </tr>
             <c:forEach items="${catStat}" var="c">
                 <tr>

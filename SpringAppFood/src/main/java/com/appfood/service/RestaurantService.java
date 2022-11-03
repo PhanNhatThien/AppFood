@@ -9,5 +9,6 @@ import java.util.Map;
 
 public interface RestaurantService {
     Restaurant getByUserId(int userId);
+    boolean addOrUpdate(Restaurant restaurant);
 }
 

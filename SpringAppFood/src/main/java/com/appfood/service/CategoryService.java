@@ -14,4 +14,8 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getCategories(String name, int page);
     Category getById(int id);
+    long count();
+    int getMaxItemsInPage();
+    boolean addOrUpdate(Category category);
+    boolean delete(Category category);
 }

@@ -174,3 +174,8 @@ function pay(){
         
     }
 }
+
+
+function removeFilter() {
+    window.location.href = window.location.href.split('?')[0]
+}

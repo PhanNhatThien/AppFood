@@ -8,6 +8,8 @@ package com.appfood.controllers;
 import com.appfood.pojo.Product;
 import com.appfood.service.ProductService;
 import javax.validation.Valid;
+
+import com.appfood.service.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private StatsService statsService;
     
     @GetMapping("/products")
     public String list(Model model) {
@@ -43,13 +47,25 @@ public class AdminController {
         
         if (this.productService.addProduct(p) == true)
             return "redirect:/admin/products";
-        
+
          return "products";
     }
     @GetMapping("/userStats")
     public String userstats(Model model){
         model.addAttribute("usersStats", this.productService.countProdsByUser());
         return "userStats";
+    }
+
+    @RequestMapping("/UserRoleStats")
+    public String userRoleStats(Model model){
+        model.addAttribute("userRoleStats", this.statsService.userRoleStats());
+        return "stats-userRole";
+    }
+
+    @RequestMapping("/ProductStats")
+    public String productStats(Model model){
+        model.addAttribute("productStats", this.statsService.productStats());
+        return "stats-product";
     }
     
 //    @GetMapping("/products/{productId}")

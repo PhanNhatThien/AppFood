@@ -7,8 +7,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>
 
-<h1 class="text-center text-danger">CHI TIET SAN PHAM</h1>
+<h1 class="text-center text-danger" style="font-size: -webkit-xxx-large;">CHI TIẾT SẢN PHẨM</h1>
 
 <div class="row">
     <div class="col-md-5">
@@ -19,15 +20,16 @@
         <h3>${product.price} VND</h3>
     </div>
 </div>
+
 <c:url value="/api/products/${product.id}/comments" var="endpoint" />
 <sec:authorize access="!isAuthenticated()">
-    <strong>Vui long <a href="<c:url value="/login" />">dang nhap</a> de binh luan!!!</strong>
+    <strong>Vui long <a href="<c:url value="/login" />">Đăng nhập tài khoản</a> để bình luận!!!</strong>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
     <div class="form-group">
-        <textarea class="form-control" placeholder="Nhap noi dung binh luan" id="contentId"></textarea>
+        <textarea class="form-control" placeholder="Nhập nội dung bình luận" id="contentId"></textarea>
     </div>
-    <button class="btn btn-danger" onclick="addComment('${endpoint}', ${product.id})">Them binh luan</button>
+    <button class="btn btn-danger" onclick="addComment('${endpoint}', ${product.id})">Thêm bình luận</button>
 </sec:authorize>
 <ul id="comments" class="list-group"">
 </ul>

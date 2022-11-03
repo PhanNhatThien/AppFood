@@ -31,6 +31,7 @@ public class LoginHandler implements AuthenticationSuccessHandler {
         request.getSession().setAttribute("currentUser", u);
 
         response.sendRedirect("/SpringAppFood/");
+
     }
     
 }

@@ -10,7 +10,7 @@ function cateStats(labels, data) {
         data: {
             labels: labels,
             datasets: [{
-                    label: 'Thong ke so san pham theo danh muc',
+                    label: 'Thống kê sản phẩm theo danh mục',
                     data: data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -50,7 +50,7 @@ function revenueStats(labels, data) {
         data: {
             labels: labels,
             datasets: [{
-                    label: 'Thong ke doanh thu',
+                    label: 'Thống kê doanh thu của cửa hàng',
                     data: data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

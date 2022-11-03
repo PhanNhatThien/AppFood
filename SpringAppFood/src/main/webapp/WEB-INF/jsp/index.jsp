@@ -13,13 +13,6 @@
 
 
 
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-    <div>
-        <a href="<c:url value="/admin/products" />" class="btn btn-danger">Quan Ly San Pham</a>
-    </div>
-</sec:authorize>
-
-
 
 <section class="container" >
     <div id="demo1" class="carousel slide" data-ride="carousel">
@@ -29,7 +22,6 @@
           <li data-target="#demo1" data-slide-to="0" class="active"></li>
           <li data-target="#demo1" data-slide-to="1"></li>
           <li data-target="#demo1" data-slide-to="2"></li>
-          <li data-target="#demo1" data-slide-to="3"></li>
         </ul>
 
         <!-- The slideshow -->
@@ -42,9 +34,6 @@
             </div>
             <div class="carousel-item">
               <img src="<c:url value="/resources/images/Banner3.png" />">
-            </div>
-            <div class="carousel-item">
-              <img src="<c:url value="/resources/images/Banner4.png" />">
             </div>
         </div>
               
@@ -67,14 +56,14 @@
                       <c:forEach items="${products}" var="p">
                           <div class="col-md-3 col-xs-12 col-sm-4 splide__slide m-2" >
                               <div class="card">
-                                  <img class="card-img-top" src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674827/samples/food/fish-vegetables.jpg" alt="Card image">
+                                  <img style="height:143px;" class="card-img-top" src="https://res.cloudinary.com/dtswvj7fd/image/upload/v1660674827/samples/food/fish-vegetables.jpg" alt="Card image">
                                   <div class="card-body">
                                       <h4 class="card-title">${p.name}</h4>
                                       <p class="card-text">
                                           <fmt:formatNumber value="${p.price}" maxFractionDigits="3" type = "number" /> VND
                                       </p>
-                                      <a href="<c:url value="/products/${p.id}" />" class="btn btn-primary">Xem chi tiet</a>
-                                      <a href="#" class="btn btn-primary" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Dat hang</a>
+                                      <a href="<c:url value="/products/${p.id}" />" class="btn btn-primary">Xem</a>
+                                      <a href="#" class="btn btn-primary" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Thêm giỏ</a>
                                   </div>
                               </div>
                           </div>
@@ -105,7 +94,7 @@
                         <div class="bt-buy">
                             <div>
                                 <a href="<c:url value="/products/${p.id}" />" >
-                                    <input type="button" value="Xem chi tiet"/>
+                                    <input type="button" value="Xem chi tiết"/>
                                 </a>
                             </div>
                             <div>
